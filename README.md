@@ -1,2 +1,3 @@
 # mmEgo
-The code with paper "Egocentric Human Pose Estimation using Head-mounted mmWave Radar"
+
+We will soon upload the code and data.
