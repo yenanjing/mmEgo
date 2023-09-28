@@ -191,7 +191,6 @@ def draw3Dpose(pose_3d, ax, floor):  # blue, orange
     ax.set_ylabel("y")
     ax.set_zlabel("z")
 
-
 # 绘制多帧pose
 def draw3Dpose_frames(pred, real, index, floor):
     # 分别绘制预测骨架和真实骨架

@@ -11,7 +11,7 @@ Head-mounted mmWave Radar**
 
 ## Requirements: 
 - Python3 (>3.5)
-- [PyTorch](http://pytorch.org/)
+- PyTorch
 - Other Python libraries can be installed by `pip install -r requirements.txt`
 
 ## Installation: 
@@ -32,8 +32,3 @@ git clone https://github.com/yenanjing/mmEgo_Rev.git
 ## Train: 
 训练模型的指令、流程
 
-## Contact：
-For any question, feel free to contact
-```
-Wenwei Li     : liwenwei404@gmail.com
-```
