@@ -76,39 +76,28 @@ class FusionModule(nn.Module):
     def __init__(self, hidden_dim=64):
         super(FusionModule, self).__init__()
         # self.fc0 = nn.Linear(hidden_dim * 4 + Config.joint_num_upper * 3, 256)
-        self.fc0 = nn.Linear(hidden_dim * 2 + Config.joint_num_upper * 3, 256)
+        self.fc0 = nn.Linear(hidden_dim * 2 + Config.joint_num_upper * 3, 128)
 
         self.faf0 = nn.ReLU()
-        self.fc1 = nn.Linear(256, 128)
+        self.fc1 = nn.Linear(128, 64)
         self.faf1 = nn.ReLU()
         self.to_q = nn.Linear(hidden_dim, hidden_dim, bias=True)
         self.to_k = nn.Linear(hidden_dim, hidden_dim, bias=True)
         self.to_v = nn.Linear(hidden_dim, hidden_dim, bias=True)
         self.scale = hidden_dim ** -0.5
-        self.proj = nn.Linear(128, 256)
-        self.fc2 = nn.Linear(128, 6 * 6 + 2 * 3)  # 下半身8个关键点, 6个旋转角
+        self.fc2 = nn.Linear(64, 6 * 6 + 2 * 3)  # 下半身8个关键点, 6个旋转角
         self.attn = nn.Linear(hidden_dim * 2, 1)
         self.softmax = nn.Softmax(dim=-1)
-        # self.rnn = nn.LSTM(input_size=128+3, hidden_size=128, num_layers=3, batch_first=True, dropout=0.1,
-        #                    bidirectional=True)
-        self.rnn_p = nn.LSTM(input_size=hidden_dim * 2, hidden_size=hidden_dim, num_layers=3, batch_first=True,
-                             dropout=0.1,
-                             bidirectional=True)
-        self.rnn_k = nn.LSTM(input_size=hidden_dim, hidden_size=hidden_dim, num_layers=3, batch_first=True, dropout=0.1,
-                             bidirectional=True)
         self.rnn_pk = nn.LSTM(input_size=hidden_dim*3, hidden_size=hidden_dim, num_layers=3, batch_first=True, dropout=0.1,
                              bidirectional=True)
 
     def forward(self, p_vec, k_vec, upper_l, batch_size, length_size):
         """
         Input:
-            p_vec: [batch_size, length_size, 128]
-            k_vec: [batch_size, length_size, 128]
-        Return:
-            l: location of joints, [batch_size, length_size, joint_num:19/9, 3]
+            p_vec: [batch_size, length_size, lower_pc_no, hidden_dim]
+            k_vec: [batch_size, length_size, joint_num_upper, hidden_dim]
         """
         upper = upper_l.contiguous().view(batch_size, length_size, -1)
-        # p_vec = p_vec.view(batch_size, length_size, -1)
         p_vec = p_vec.view(batch_size * length_size, Config.lower_pc_no, -1)
         k_vec = k_vec.view(batch_size * length_size, Config.joint_num_upper, -1)
         t_q = self.to_q(p_vec)
@@ -121,20 +110,17 @@ class FusionModule(nn.Module):
         new_p_vec = torch.cat((p_vec, t_x), -1)
         attn_weights = self.softmax(self.attn(new_p_vec))
         a_vec = torch.sum(new_p_vec * attn_weights, dim=1).view(batch_size, length_size, -1)
-        # a_vec, _ = self.rnn_p(a_vec)
         k_vec = k_vec.transpose(-2, -1)
         k_vec = F.avg_pool1d(k_vec, k_vec.size(2)).view(batch_size, length_size, -1)
-        # k_vec, _ = self.rnn_k(k_vec)
         ak_vec = torch.cat((a_vec, k_vec), -1)
         ak_vec, _ = self.rnn_pk(ak_vec)
-        # x = torch.cat((g_vec, a_vec), -1)
-        # x = torch.cat((a_vec, k_vec, upper), -1)
+
         x = torch.cat((ak_vec, upper), -1)
         x = self.fc0(x)
         x = self.faf0(x)
         x = self.fc1(x)
-        x1 = self.faf1(x)
-        x = self.fc2(x1)
+        x = self.faf1(x)
+        x = self.fc2(x)
 
         q = x[:, :, :6 * 6].reshape(batch_size * length_size * 6, 6).contiguous()
         tmp_x = nn.functional.normalize(q[:, :3], dim=-1)

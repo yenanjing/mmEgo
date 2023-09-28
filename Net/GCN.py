@@ -2,6 +2,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 
+from Config.config import Config
+
 
 class ConvTemporalGraphical(nn.Module):
     r"""The basic module for applying a graph convolution.
@@ -187,10 +189,7 @@ class Graph():
         if layout == 'kinect_upper':
             self.num_node = 15
             self_link = [(i, i) for i in range(self.num_node)]
-            neighbor_link = [(0, 12), (0, 13), (0, 1), (1, 2), (2, 3), (2, 4),
-                             (2, 8), (3, 14), (4, 5), (5, 6), (6, 7), (8, 9),
-                             (9, 10), (10, 11)]  # upper
-            # neighbor_link = config.skeleton_all.tolist()  #all
+            neighbor_link = Config.kinect_upper_gragh
             self.edge = self_link + neighbor_link
             self.center = 2
         else:
@@ -303,22 +302,16 @@ class Model(nn.Module):
                  edge_importance_weighting=True, **kwargs):
         super().__init__()
 
-        # load graph
         self.graph = Graph(**graph_args)
         A = torch.tensor(self.graph.A, dtype=torch.float32, requires_grad=False)
         self.register_buffer('A', A)
-        # 注册变量，A是不会改变的常量
 
-        # build networks
-        spatial_kernel_size = A.size(0)  # 空间卷积核大小等于子集个数
+        spatial_kernel_size = A.size(0)
         temporal_kernel_size = 9
         kernel_size = (temporal_kernel_size, spatial_kernel_size)
         self.data_bn = nn.BatchNorm1d(in_channels * A.size(1))
         kwargs0 = {k: v for k, v in kwargs.items() if k != 'dropout'}
         self.gcn_networks = nn.ModuleList((
-            # st_gcn(in_channels, 64, kernel_size, 1, residual=True, **kwargs0),
-            # st_gcn(64, 128, kernel_size, 1, **kwargs),
-            # st_gcn(128, 256, kernel_size, 1, **kwargs),
             st_gcn(in_channels, 32, kernel_size, 1, residual=True, **kwargs0),
             st_gcn(32, 64, kernel_size, 1, **kwargs),
             st_gcn(64, 128, kernel_size, 1, **kwargs),
