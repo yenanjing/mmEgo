@@ -171,7 +171,6 @@ class MMEgo():
             skl = np.asarray(skl)
             ground = np.asarray(ground)
             batch_size, seq_len, point_num, dim = data.shape
-            imu = np.asarray(imu)
 
             imu_i = torch.tensor(imu, dtype=torch.float32, device=self.device).squeeze()
             R_R0R = torch.tensor(R_R0R, dtype=torch.float32, device=self.device)
@@ -345,24 +344,19 @@ class MMEgo():
         with torch.no_grad():
             for batch_idx, (data, target, skl, imu, init_head, ground, foot_contact, R_R0R, t_R0R, R_RtW) in tqdm(
                     enumerate(self.vis_loader)):
-                # print(type(data))    ##tensor
                 data = np.asarray(data)
                 target = np.asarray(target)
                 imu = np.asarray(imu)
                 skl = np.asarray(skl)
                 R_RtW = np.asarray(R_RtW)
                 ground = np.asarray(ground)
-                # init_head = np.asarray(init_head)
-                # foot_contact = np.asarray(foot_contact)
                 batch_size, seq_len, point_num, dim = data.shape
-                imu = np.asarray(imu)
                 imu_i = torch.tensor(imu, dtype=torch.float32, device=self.device)
                 data_ti = torch.tensor(data, dtype=torch.float32, device=self.device)
                 target_upper = target[:, :, self.upper_joint_map, :]
                 target_upper = torch.tensor(target_upper, dtype=torch.float32, device=self.device)
                 target_lower = target[:, :, self.lower_joint_map, :]
                 target = torch.tensor(target, dtype=torch.float32, device=self.device)
-                # foot_contact = torch.tensor(foot_contact, dtype=torch.float32, device=self.device).squeeze()
                 target_lower = torch.tensor(target_lower, dtype=torch.float32, device=self.device)
                 self.optimizer.zero_grad()
 
@@ -374,7 +368,6 @@ class MMEgo():
 
                 R_p, t_p = self.model_IMU(imu_i)
                 R, t = R_p.clone().detach(), t_p.clone().detach()
-                # pred_l, pred_q, pred_t, pred_g, _, _, _, _, _, _ = model(data_ti, h0_g, c0_g, h0_a, c0_a, initial_body)
                 upper, _, _, _, _, _, _, _ = self.Upper_net(data_ti, h0_g, c0_g, h0_a, c0_a, initial_body,
                                                             R, t)
                 upper_l = upper.clone().detach()

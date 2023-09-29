@@ -24,7 +24,7 @@ git clone https://github.com/yenanjing/mmEgo_Rev.git
 结果的可视化结果(上半身、下半身)
 
 ## Data:
-大块数据下载指令、地址
+
 
 ## Test:
 训练好模型的调用指令、流程、运行结果预期

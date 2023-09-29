@@ -148,33 +148,17 @@ def draw3Dupper_pose(pose_3d, ax, floor):  # blue, orange
 
 # 绘制单帧pose
 def draw3Dpose(pose_3d, ax, floor):  # blue, orange
-    # fig = plt.figure()
-    # ax = Axes3D(fig)
-    # ax.grid(False)
     pose_3d[:, 1] -= 0.2
     # 计算骨架投影到地面上的位置
     floor_level = -1 * floor
     RADIUS = 1  # space around the subject
     xroot, yroot, zroot = pose_3d[0, 0], pose_3d[0, 1], pose_3d[0, 2]
-    # light_pos = [0, -5, -12]
-    # project_ske_2d = project_skeleton_to_ground(pose_3d, light_pos, floor_level)
-    # joints_2d = np.concatenate([project_ske_2d, np.full((21, 1), floor_level)], axis=-1)
-    # joints_2d = np.concatenate([pose_3d[:, :2], np.full((21, 1), floor_level)], axis=-1)
 
-    # 绘制骨架投影
-    # for connection in config.skeleton_all:
-    #     joint1 = joints_2d[connection[0]]
-    #     joint2 = joints_2d[connection[1]]
-    #     ax.plot([joint1[0], joint2[0]], [joint1[1], joint2[1]], [joint1[2], joint2[2]], 'k--')
-    # 绘制地面
     x = np.arange(-RADIUS + xroot, RADIUS + xroot, 0.1)
     y = np.arange(-RADIUS + yroot, RADIUS + yroot, 0.1)
     X, Y = np.meshgrid(x, y)
     Z = np.full(X.shape, floor_level)
-    # 绘制平面
-    # ax.plot_trisurf(X.flatten(), Y.flatten(), Z.flatten(), color='gray', shade=True, alpha=0.8)
 
-    # ax.plot_surface(X, Y, Z, rcount=1, ccount=1, color='grey', shade=False, alpha=0.4, zorder=1)  #地平面
 
     for i in Config.skeleton_all:
         x, y, z = [np.array([pose_3d[i[0], j], pose_3d[i[1], j]]) for j in range(3)]
@@ -194,55 +178,33 @@ def draw3Dpose(pose_3d, ax, floor):  # blue, orange
 # 绘制多帧pose
 def draw3Dpose_frames(pred, real, index, floor):
     # 分别绘制预测骨架和真实骨架
-    # 创建画布和子图
-    targetPath = './svg/%d' % (Config.Idx)
-    if not os.path.exists(targetPath):
-        os.makedirs(targetPath)
-    fig1 = plt.figure(1, figsize=(5, 5))
-    fig2 = plt.figure(2, figsize=(5, 5))
-    ax1 = fig1.add_subplot(111, projection='3d')
-    ax1.set_box_aspect([1.5, 1.5, 1.5])  # 设置缩放比例
-    # ax1.set_title('Predicted Skeleton')
-    # ax1.axis('off')
-    ax1.axis('on')
-    ax2 = fig2.add_subplot(111, projection='3d')
-    ax2.set_box_aspect([1.5, 1.5, 1.5])  # 设置缩放比例
-    # ax2.set_title('Real Skeleton')
-    # ax2.axis('off')
-    ax2.axis('on')
+
     i = 0
     while i < pred.shape[0]:
-        ax1 = fig1.add_subplot(111, projection='3d')
-        # ax1.set_title('Predicted Skeleton')
+        fig1 = plt.figure(1, figsize=(10, 6))
+        # fig1.suptitle('Prediction')
+
+        # fig2 = plt.figure(2, figsize=(5, 5))
+        ax1 = fig1.add_subplot(121, projection='3d')
+        ax1.set_title('Predicted Skeleton')
         # ax1.axis('off')
         ax1.axis('on')
         ax1.set_box_aspect([1.5, 1.5, 1.5])  # 设置缩放比例
-        ax2 = fig2.add_subplot(111, projection='3d')
-        # ax2.set_title('Real Skeleton')
+        ax2 = fig1.add_subplot(122, projection='3d')
+        ax2.set_title('Real Skeleton')
         # ax2.axis('off')
         ax2.axis('on')
         ax2.set_box_aspect([1.5, 1.5, 1.5])  # 设置缩放比例
         draw3Dpose(pred[i], ax1, floor[i])
         draw3Dpose(real[i], ax2, floor[i])
-        # draw3Dupper_pose(pred[i], ax1, floor[i])
-        # draw3Dupper_pose(real[i], ax2, floor[i])
-        # fig1.show()
-        # fig2.show()
-        # plt.pause(3)
-        # plt.ion()
-        targetPath = './svg/%d/%d' % (Config.Idx, i + index)
-        if not os.path.exists(targetPath):
-            os.makedirs(targetPath)
 
-        fig1.savefig('./svg/{}/{}/pred_frame_{}.svg'.format(Config.Idx, i + index, i + index))
-        fig2.savefig('./svg/{}/{}/real_frame_{}.svg'.format(Config.Idx, i + index, i + index))
+        fig1.show()
+        plt.pause(3)
+        # plt.ion()
         # plt.close()
-        # print(ax.lines)
         plt.clf()
         # ax.lines = []
         i += 1
-    plt.close(1)
-    plt.close(2)
 
 
 def radian_to_degree(q):
@@ -398,7 +360,7 @@ def draw_bar(l, idx, name):
         plt.ylabel('Average Localization Error (m)', fontsize=15)
         plt.bar(range(0, len(l), 1), l)
         plt.xticks(range(0, len(l), 1))
-        plt.savefig("./lossAndacc/{}/Eval_joint_accuracy.png".format(idx))
+        # plt.savefig("./lossAndacc/{}/Eval_joint_accuracy.png".format(idx))
         plt.show()
     elif name == 'angle':
         # plt.cla()

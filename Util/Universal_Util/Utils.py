@@ -194,7 +194,6 @@ def draw3Dpose(pose_3d, ax, floor):  # blue, orange
 # 绘制多帧pose
 def draw3Dpose_frames(pred, real, index, floor):
     # 分别绘制预测骨架和真实骨架
-    # 创建画布和子图
     targetPath = './svg/%d' % (Config.Idx)
     if not os.path.exists(targetPath):
         os.makedirs(targetPath)

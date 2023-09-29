@@ -25,15 +25,13 @@ class PosePC(Dataset):
         self.body_length_all = []
         self.initial_body = []
         self.initial_body_unit = []
-        # 选择19个关节点
+        # 选择21个关节点
         self.joint_selection = [0, 1, 2, 3, 4, 5, 6, 7, 11, 12, 13, 14, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         self.skeleton = Config.skeleton_all.tolist()
 
         self.data_ti_, self.data_key_, self.imu_, self.skl_, self.ground_, \
         self.foot_contact_, self.R_R0R_, self.t_R0R_, self.R_RtW_ \
             = self.dataRead()
-
-        print("全部样本大小：", self.data_ti_.shape)
 
         if self.vis is False:
             random_state = np.random.RandomState(Config.dataset_random_seed)
@@ -54,7 +52,6 @@ class PosePC(Dataset):
             random_state.shuffle(self.t_R0R_)
         if self.train:  # train
             self.data_ti = self.data_ti_[0:int(len(self.data_ti_) * 0.8)]
-            print("训练样本大小：", self.data_ti.shape)
             self.data_key = self.data_key_[0:int(len(self.data_key_) * 0.8)]
             self.skl = self.skl_[0:int(len(self.skl_) * 0.8)]
             self.imu = self.imu_[0:int(len(self.imu_) * 0.8)]
@@ -64,7 +61,6 @@ class PosePC(Dataset):
             self.t_R0R = self.t_R0R_[0:int(len(self.t_R0R_) * 0.8)]
         elif not self.vis:  # test
             self.data_test_ti = self.data_ti_[int(len(self.data_ti_) * 0.8):]
-            print("测试样本大小：", self.data_test_ti.shape)
             self.data_test_key = self.data_key_[int(len(self.data_key_) * 0.8):]
             self.skl_test = self.skl_[int(len(self.skl_) * 0.8):]
             self.imu_test = self.imu_[int(len(self.imu_) * 0.8):]
