@@ -5,7 +5,7 @@ import numpy as np
 
 
 class Config:
-    Idx = 305  # 实验序号
+    Idx = 1001  # 实验序号
     pb = 10  # 绘图去除前缀长度
 
     frame_no = 20

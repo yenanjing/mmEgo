@@ -9,9 +9,13 @@ from tqdm import tqdm
 import Util.Universal_Util.Utils as utils
 from Config.config import Config
 from Net.IMU_Net import IMUNet
-from Util.Universal_Util.Dataset import PosePC
+from Util.Universal_Util.Dataset_sample import PosePC
+
+# from Util.Universal_Util.Dataset import PosePC
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+_current_path = os.path.dirname(__file__)
+
 
 # batch*3*3
 class GeodesicLoss(nn.Module):
@@ -52,17 +56,17 @@ class MMEgo:
             self.model_IMU.load(Config.model_IMU_path)
         self.pb = Config.pb
         self.Idx = Config.Idx
-        self.targetPath = './report/%d' % (self.Idx)
+        self.targetPath = os.path.join(_current_path, './report/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
         else:
             print('路径已经存在！')
-        self.targetPath = './model/%d' % (self.Idx)
+        self.targetPath = os.path.join(_current_path, './model/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
         else:
             print('路径已经存在！')
-        self.targetPath = './lossAndacc/%d' % (self.Idx)
+        self.targetPath = os.path.join(_current_path, './lossAndacc/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
         else:
@@ -74,16 +78,18 @@ class MMEgo:
         self.train_loader = DataLoader(self.train_data, batch_size=self.batchsize, shuffle=True, drop_last=False)
         self.test_data = PosePC(train=False, batch_length=self.frame_no)
         self.test_loader = DataLoader(self.test_data, batch_size=self.batchsize, shuffle=True, drop_last=False)
-        self.lossfile = open('./report/%d/log-loss.txt' % (self.Idx), 'w')
-        self.evalfile = open('./report/%d/log-eval.txt' % (self.Idx), 'w')
+        self.lossfile = open(os.path.join(_current_path, './report/%d/log-loss.txt' % (self.Idx)), 'w')
+        self.evalfile = open(os.path.join(_current_path, './report/%d/log-eval.txt' % (self.Idx)), 'w')
         self.loss_total = 0
         self.R_RI = np.array([[0, 0, 1], [0, -1, 0], [1, 0, 0]])
         self.R_RI = torch.tensor(self.R_RI, dtype=torch.float32, device=self.device)
 
     def save_models(self, epoch, model):
-        torch.save(model.state_dict(),
-                   "./model/{}/epoch{}_batch{}frame{}lr{}.pth".format(self.Idx, epoch, self.batchsize, self.frame_no,
-                                                                      self.learning_rate_imu))
+        torch.save(model.state_dict(), os.path.join(_current_path,
+                                                    "./model/{}/epoch{}_batch{}frame{}lr{}.pth".format(self.Idx, epoch,
+                                                                                                       self.batchsize,
+                                                                                                       self.frame_no,
+                                                                                                       self.learning_rate)))
 
     def train_imu(self):
         early_stopping = utils.EarlyStopping(patience=30)
@@ -105,7 +111,7 @@ class MMEgo:
             if early_stopping(eval_loss):
                 print("Early stopping")
                 self.save_models(epoch, self.model_IMU)
-                epochs = epoch+1
+                epochs = epoch + 1
                 break
         utils.draw_fig(loss_l, "loss", epochs, self.pb, self.Idx)
 

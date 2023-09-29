@@ -9,9 +9,11 @@ import Util.Universal_Util.Utils as utils
 from Config.config import Config
 from Net.IMU_Net import IMUNet
 from Net.Upper_Net import UpperNet
-from Util.Universal_Util.Dataset import PosePC
+# from Util.Universal_Util.Dataset import PosePC
+from Util.Universal_Util.Dataset_sample import PosePC
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+_current_path = os.path.dirname(__file__)
 
 
 class MMEgo():
@@ -37,17 +39,17 @@ class MMEgo():
         self.leaf_kp = self.skeleton[:, 1]
         self.root_kp = torch.tensor(self.root_kp, dtype=torch.long, device=self.device)
         self.leaf_kp = torch.tensor(self.leaf_kp, dtype=torch.long, device=self.device)
-        self.targetPath = './report/%d' % (self.Idx)
+        self.targetPath = os.path.join(_current_path, './report/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
         else:
             print('路径已经存在！')
-        self.targetPath = './model/%d' % (self.Idx)
+        self.targetPath = os.path.join(_current_path, './model/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
         else:
             print('路径已经存在！')
-        self.targetPath = './lossAndacc/%d' % (self.Idx)
+        self.targetPath = os.path.join(_current_path, './lossAndacc/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
         else:
@@ -65,15 +67,16 @@ class MMEgo():
         self.train_loader = DataLoader(self.train_data, batch_size=self.batchsize, shuffle=True, drop_last=False)
         self.test_data = PosePC(train=False, batch_length=self.frame_no)
         self.test_loader = DataLoader(self.test_data, batch_size=self.batchsize, shuffle=True, drop_last=False)
-        self.lossfile = open('./report/%d/log-loss.txt' % (self.Idx), 'w')
-        self.evalfile = open('./report/%d/log-eval.txt' % (self.Idx), 'w')
+        self.lossfile = open(os.path.join(_current_path, './report/%d/log-loss.txt' % (self.Idx)), 'w')
+        self.evalfile = open(os.path.join(_current_path, './report/%d/log-eval.txt' % (self.Idx)), 'w')
         self.loss_total = 0
 
     def save_models(self, epoch, model):
-        torch.save(model.state_dict(),
-                   "./model/{}/epoch{}_batch{}frame{}lr{}.pth".format(self.Idx, epoch, self.batchsize, self.frame_no,
-                                                                      self.learning_rate))
-
+        torch.save(model.state_dict(), os.path.join(_current_path,
+                                                    "./model/{}/epoch{}_batch{}frame{}lr{}.pth".format(self.Idx, epoch,
+                                                                                                       self.batchsize,
+                                                                                                       self.frame_no,
+                                                                                                       self.learning_rate)))
     def angle_loss(self, pred_ske, true_ske):
         pred_vec = pred_ske[:, :, [self.upper_joint_map.index(l) for l in self.leaf_kp], :] - pred_ske[:, :,
                                                                                               [
@@ -227,7 +230,7 @@ class MMEgo():
                 # R, t = R_R0R, torch.zeros((batch_size, seq_len, 3), dtype=torch.float32, device=self.device)
 
                 upper_l, upper_q, _, _, _ = self.model(data_ti, h0_g, c0_g,
-                                                                initial_body, R, t)
+                                                       initial_body, R, t)
                 loss = self.loss_fn2(upper_l, target_upper)
                 eval_loss.append(loss.item() / batch_size / (seq_len))
 

@@ -75,6 +75,7 @@ class MMEgo():
         eval_loss = []
         eval_accu = []
         accu_ll = []
+        accu_upper_l = []
         accu_lower_l = []
         loss_l = []
         angle_ll = []
@@ -144,6 +145,9 @@ class MMEgo():
                 eval_loss_l.append([loss_1.item() / batch_size / (seq_len), loss_3.item() / batch_size / (seq_len)])
 
                 lower_l = lower_l.view(batch_size, seq_len, 8, 3)
+                accu_upper = torch.sqrt(torch.sum(torch.square(upper_l - target_upper), dim=-1))
+                accu_upper = torch.mean(accu_upper).item()
+
                 accu_lower = torch.sqrt(torch.sum(torch.square(lower_l - target_lower), dim=-1))
                 accu_lower = torch.mean(accu_lower).item()
                 angle_l = torch.mean(self.angle_loss(pred_l, target), dim=0).mean(dim=0).cpu().numpy().tolist()
@@ -153,6 +157,7 @@ class MMEgo():
                 accu_ll.append(accu_l)
                 eval_accu.append(accu)
                 accu_lower_l.append(accu_lower)
+                accu_upper_l.append(accu_upper)
                 angle_ll.append(angle_l)
                 iteration += 1
             eval_loss = np.mean(eval_loss)
@@ -164,11 +169,13 @@ class MMEgo():
             accu_ll = np.mean(accu_ll, axis=0)
             loss_l.append(eval_loss)
             accu_lower_l = np.mean(accu_lower_l)
+            accu_upper_l = np.mean(accu_upper_l)
 
-        print('Average Joint Localization Error: {}'.format(eval_accu))
-        print('Average LowerBody Joint Localization Error: {}'.format(accu_lower_l))
-        print('Average Joint Rotation Error: {}'.format(sum(angle_ll) / len(angle_ll)))
-        print(accu_ll)
+        print('Average Joint Localization Error(cm): {}'.format(eval_accu * 100))
+        print('Average UpperBody Joint Localization Error(cm): {}'.format(accu_upper_l * 100))
+        print('Average LowerBody Joint Localization Error(cm): {}'.format(accu_lower_l * 100))
+        print('Average Joint Rotation Error(°): {}'.format(sum(angle_ll) / len(angle_ll)))
+        print('Per Joint Localization Error(cm): {}'.format(accu_ll * 100))
         results = accu_ll.tolist()
         results.append(eval_accu.item())
         utils.draw_bar(results, self.Idx, 'pos')
@@ -189,8 +196,6 @@ class MMEgo():
                 skl = np.asarray(skl)
                 R_RtW = np.asarray(R_RtW)
                 ground = np.asarray(ground)
-                # init_head = np.asarray(init_head)
-                # foot_contact = np.asarray(foot_contact)
                 batch_size, seq_len, point_num, dim = data.shape
                 imu_i = torch.tensor(imu, dtype=torch.float32, device=self.device)
                 data_ti = torch.tensor(data, dtype=torch.float32, device=self.device)

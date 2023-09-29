@@ -109,7 +109,8 @@ class PosePC(Dataset):
         list_all_ground = []
         list_all_foot_contact = []
 
-        rootDir = "../../Resource/Sample_data"
+        _current_path = os.path.dirname(__file__)
+        rootDir = os.path.join(_current_path, "../../Resource/Sample_data")
         subDirlist = sorted(os.listdir(rootDir), key=lambda x: int(x))
         orientation_ref = []
         R_ref = []
@@ -270,7 +271,6 @@ class PosePC(Dataset):
         list_all_R_RtW = np.asarray(list_all_R_RtW)
 
         return list_all_ti, list_all_key_xyz, list_all_imu, list_all_skl, list_all_ground, list_all_foot_contact, list_all_R_R0R, list_all_t_R0R, list_all_R_RtW
-
 
 
 if __name__ == '__main__':

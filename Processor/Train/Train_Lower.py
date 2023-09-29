@@ -12,10 +12,12 @@ from Config.config import Config
 from Net.IMU_Net import IMUNet
 from Net.Lower_Net import LowerNet
 from Net.Upper_Net import UpperNet
-from Util.Universal_Util.Dataset import PosePC
+# from Util.Universal_Util.Dataset import PosePC
+from Util.Universal_Util.Dataset_sample import PosePC
+
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-torch.autograd.set_detect_anomaly(True)
+_current_path = os.path.dirname(__file__)
 
 class MMEgo():
     def __init__(self):
@@ -47,17 +49,17 @@ class MMEgo():
         self.leaf_kp_all = self.skeleton[:, 1]
         self.root_kp_all = torch.tensor(self.root_kp_all, dtype=torch.long, device=self.device)
         self.leaf_kp_all = torch.tensor(self.leaf_kp_all, dtype=torch.long, device=self.device)
-        self.targetPath = './report/%d' % (self.Idx)
+        self.targetPath = os.path.join(_current_path, './report/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
         else:
             print('路径已经存在！')
-        self.targetPath = './model/%d' % (self.Idx)
+        self.targetPath = os.path.join(_current_path, './model/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
         else:
             print('路径已经存在！')
-        self.targetPath = './lossAndacc/%d' % (self.Idx)
+        self.targetPath = os.path.join(_current_path, './lossAndacc/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
         else:
@@ -77,14 +79,16 @@ class MMEgo():
         self.train_loader = DataLoader(self.train_data, batch_size=self.batchsize, shuffle=True, drop_last=False)
         self.test_data = PosePC(train=False, batch_length=self.frame_no)
         self.test_loader = DataLoader(self.test_data, batch_size=self.batchsize, shuffle=True, drop_last=False)
-        self.lossfile = open('./report/%d/log-loss.txt' % (self.Idx), 'w')
-        self.evalfile = open('./report/%d/log-eval.txt' % (self.Idx), 'w')
+        self.lossfile = open(os.path.join(_current_path, './report/%d/log-loss.txt' % (self.Idx)), 'w')
+        self.evalfile = open(os.path.join(_current_path, './report/%d/log-eval.txt' % (self.Idx)), 'w')
         self.loss_total = 0
 
     def save_models(self, epoch, model):
-        torch.save(model.state_dict(),
-                   "./model/{}/epoch{}_batch{}frame{}lr{}.pth".format(self.Idx, epoch, self.batchsize, self.frame_no,
-                                                                      self.learning_rate))
+        torch.save(model.state_dict(), os.path.join(_current_path,
+                                                    "./model/{}/epoch{}_batch{}frame{}lr{}.pth".format(self.Idx, epoch,
+                                                                                                       self.batchsize,
+                                                                                                       self.frame_no,
+                                                                                                       self.learning_rate)))
 
     def angle_loss(self, pred_ske, true_ske):
         pred_vec = pred_ske[:, :, [l for l in self.leaf_kp_all], :] - pred_ske[:, :, [l for l in self.root_kp_all], :]
@@ -156,9 +160,9 @@ class MMEgo():
     def train_once(self):
         self.model.train()
         self.model_IMU.eval()
-        # self.Upper_net.eval()
+        self.Upper_net.eval()
         # self.model_IMU.train()
-        self.Upper_net.train()
+        # self.Upper_net.train()
         training_loss = []
         train_accu_epoch = []
         for batch_idx, (data, target, skl, imu, ground, foot_contact, R_R0R, t_R0R) in tqdm(
@@ -194,8 +198,8 @@ class MMEgo():
             # R, t = R_R0R, torch.zeros((batch_size, seq_len, 3), dtype=torch.float32, device=self.device)
 
             upper, _, _, _, _ = self.Upper_net(data_ti, h0_g, c0_g, initial_body, R, t)
-            # upper_l = upper.clone().detach()
-            upper_l = upper.clone()
+            upper_l = upper.clone().detach()
+            # upper_l = upper.clone()
             # upper_l = target_upper
             lower_l, lower_q = self.model(upper_l, data_ti, h0_g, c0_g, h0_a, c0_a,
                                           initial_body, R, t)
