@@ -4,6 +4,40 @@ This repository holds the codebase, dataset and models for the paper:
 
 **Egocentric Human Pose Estimation using Head-mounted mmWave Radar**.
 
+The structure of the repository is listed as following:
+```
+|-- Config
+|   |-- config.py
+|   |-- config_demo.py
+|-- Net
+|   |-- GCN.py
+|   |-- IMU_Net.py
+|   |-- Lower_Net.py
+|   |-- Upper_Net.py
+|-- Processor
+|   |-- Test
+|   |   |-- Demo_test.py
+|   |-- Train
+|       |-- Train_IMU.py
+|       |-- Train_Lower.py
+|       |-- Train_Upper.py
+|-- Resource
+|   |-- Img
+|   |-- Pretrained_model
+|   |-- Sample_data
+|-- Util
+|   |-- Universal_Util
+|   |   |-- Dataset.py
+|   |   |-- Dataset_sample.py
+|   |   |-- Utils.py
+|   |   |-- Utils_demo.py
+|   |-- Visual_Util
+|       |-- draw3Dpose.py
+|-- main.py
+|-- README.md
+|-- requirement.txt
+```
+
 ## Visualization：
 
 Todo
@@ -13,6 +47,9 @@ Todo
 - Python3 (>3.5)
 - PyTorch
 - Other Python libraries can be installed by `pip install -r requirements.txt`
+
+****Tips:** If you don't want to set up the environment locally, you can use Google's Colab service to run
+this [notebook](https://colab.research.google.com/drive/1Y8gPFRGWQudmVw7DBKW0JkgehBoV7BoH?usp=sharing).**
 
 ## Installation:
 
@@ -51,7 +88,9 @@ Per Joint Localization Error(cm): [3.35941255 2.87198341 2.56157758 2.30499098 2
 ```
 
 And the plot window displaying the error bar chart for each joint, is as follows:
-![infer_per_joint_error.png](test_per_joint_error.png)
+<p align="center">
+    <img src="Resource/Img/test_per_joint_error.png", width="1200">
+</p>
 
 ### Qualitative results
 
@@ -63,7 +102,9 @@ python main.py --infer --vis
 
 The expected output should be a comparison between the predicted skeleton and the ground truth skeleton for each frame,
 as shown below:
-![visualization.png](visualization.png)
+<p align="center">
+    <img src="Resource/Img/visualization.png", width="1200">
+</p>
 
 ## Train:
 

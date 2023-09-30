@@ -108,7 +108,10 @@ class IMUNet(nn.Module):
         加载指定路径的模型
         """
 
-        self.load_state_dict(torch.load(pathname))
+        if torch.cuda.is_available():
+            self.load_state_dict(torch.load(pathname))
+        else:
+            self.load_state_dict(torch.load(pathname), map_location=torch.device('cpu'))
 
 
 if __name__ == '__main__':

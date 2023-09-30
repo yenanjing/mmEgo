@@ -88,8 +88,9 @@ class FusionModule(nn.Module):
         self.fc2 = nn.Linear(64, 6 * 6 + 2 * 3)  # 下半身8个关键点, 6个旋转角
         self.attn = nn.Linear(hidden_dim * 2, 1)
         self.softmax = nn.Softmax(dim=-1)
-        self.rnn_pk = nn.LSTM(input_size=hidden_dim*3, hidden_size=hidden_dim, num_layers=3, batch_first=True, dropout=0.1,
-                             bidirectional=True)
+        self.rnn_pk = nn.LSTM(input_size=hidden_dim * 3, hidden_size=hidden_dim, num_layers=3, batch_first=True,
+                              dropout=0.1,
+                              bidirectional=True)
 
     def forward(self, p_vec, k_vec, upper_l, batch_size, length_size):
         """
@@ -254,4 +255,7 @@ class LowerNet(nn.Module):
         """
         加载指定路径的模型
         """
-        self.load_state_dict(torch.load(pathname))
+        if torch.cuda.is_available():
+            self.load_state_dict(torch.load(pathname))
+        else:
+            self.load_state_dict(torch.load(pathname), map_location=torch.device('cpu'))

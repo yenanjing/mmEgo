@@ -7,7 +7,7 @@ if __name__ == '__main__':
                         help='Choose a network: IMU_Net, Upper_Net, Lower_Net')
     parser.add_argument('--train', action='store_true', help='Train model')
     parser.add_argument('--infer', action='store_true', help='Perform inference')
-    parser.add_argument('--vis', action='store_true', help='Visulization')
+    parser.add_argument('--vis', action='store_true', help='Visualization')
 
     args = parser.parse_args()
     if args.train:
