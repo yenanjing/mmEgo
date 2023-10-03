@@ -10,8 +10,8 @@ from Config.config_demo import Config
 from Net.IMU_Net import IMUNet
 from Net.Lower_Net import LowerNet
 from Net.Upper_Net import UpperNet
-# from Util.Universal_Util.Dataset_sample import PosePC
-from Util.Universal_Util.Dataset_test import PosePC
+from Util.Universal_Util.Dataset_sample import PosePC
+# from Util.Universal_Util.Dataset_test import PosePC
 
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -179,7 +179,7 @@ class MMEgo():
         print('Average Joint Rotation Error(°): {}'.format(sum(angle_ll) / len(angle_ll)))
         print('Per Joint Localization Error(cm): {}'.format(accu_ll * 100))
         results = accu_ll.tolist()
-        results.append(eval_accu.item())
+        # results.append(eval_accu.item())
         utils.draw_bar(results, self.Idx, 'pos')
         return eval_loss, eval_loss_l, eval_accu, accu_lower_l, accu_ll, angle_ll
 

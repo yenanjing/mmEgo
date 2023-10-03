@@ -355,12 +355,29 @@ def draw_bar(l, idx, name):
     skeleton_all = ['20—3', '3—2', '2—1', '2—4', '2—8', '4—5', '5—6', '6—7', '8—9', '9—10', '10—11',
                     '1—0', '0—12', '0—16', '12—13', '13—14', '14—15', '16—17', '17—18', '18—19']
     if name == 'pos':
-        plt.cla()
-        plt.xlabel('Joint Index', fontsize=15)
-        plt.ylabel('Average Localization Error (m)', fontsize=15)
-        plt.bar(range(0, len(l), 1), l)
-        plt.xticks(range(0, len(l), 1))
+        from PIL import Image
+        # from matplotlib import gridspec
+        # plt.clf()
+        # fig = plt.figure(figsize=(12, 6))
+        # gs = gridspec.GridSpec(1, 2, width_ratios=[2, 1])
+        # fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6), gridspec_kw={'width_ratios': [2, 1]})
+
+        # ax1 = plt.subplot(gs[0])
+        ax1.set_xlabel('Joint Index', fontsize=15)
+        ax1.set_ylabel('Average Localization Error (m)', fontsize=15)
+        ax1.bar(range(0, len(l), 1), l)
+        ax1.set_xticks(range(0, len(l), 1))
+
+        # ax2 = plt.subplot(gs[1])
+        _current_path = os.path.dirname(__file__)
+        png_file = os.path.join(_current_path, "../../Resource/Img/Skeleton_index.png")
+        image = Image.open(png_file)
+        ax2.imshow(image)
+        ax2.axis('off')
+
         # plt.savefig("./lossAndacc/{}/Eval_joint_accuracy.png".format(idx))
+        plt.tight_layout()
         plt.show()
     elif name == 'angle':
         # plt.cla()
