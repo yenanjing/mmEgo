@@ -175,6 +175,39 @@ def draw3Dpose(pose_3d, ax, floor):  # blue, orange
     ax.set_ylabel("y")
     ax.set_zlabel("z")
 
+#按动作绘制pose gif
+def draw3Dpose_action_gif(pred, real, action_index, floor):
+
+    i = 0
+    fig1 = plt.figure(1, figsize=(10, 6))
+    fig1.suptitle('action: %d' % action_index, fontsize=16)
+    ax1 = fig1.add_subplot(121, projection='3d')
+    ax2 = fig1.add_subplot(122, projection='3d')
+    while i < pred.shape[0]:
+        ax1.clear()
+        ax2.clear()
+        # fig1.suptitle('Prediction')
+
+        # fig2 = plt.figure(2, figsize=(5, 5))
+
+        ax1.set_title('Predicted Skeleton')
+        # ax1.axis('off')
+        ax1.axis('on')
+        ax1.set_box_aspect([1.5, 1.5, 1.5])  # 设置缩放比例
+        ax2.set_title('Real Skeleton')
+        # ax2.axis('off')
+        ax2.axis('on')
+        ax2.set_box_aspect([1.5, 1.5, 1.5])  # 设置缩放比例
+        draw3Dpose(pred[i], ax1, floor[i])
+        draw3Dpose(real[i], ax2, floor[i])
+
+        # fig1.show()
+        plt.pause(1)
+        # plt.ion()
+        i += 1
+
+    plt.tight_layout()
+    plt.show()
 # 绘制多帧pose
 def draw3Dpose_frames(pred, real, index, floor):
     # 分别绘制预测骨架和真实骨架

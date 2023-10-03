@@ -11,6 +11,7 @@ from Net.IMU_Net import IMUNet
 from Net.Lower_Net import LowerNet
 from Net.Upper_Net import UpperNet
 from Util.Universal_Util.Dataset_sample import PosePC
+from Util.Universal_Util.Dataset_action import PoseByAction
 # from Util.Universal_Util.Dataset_test import PosePC
 
 
@@ -189,9 +190,11 @@ class MMEgo():
         self.Upper_net.eval()
         self.model.eval()
         index = 0
+        self.action_data = PosePC(train=False, vis=True, batch_length=self.frame_no)
+        self.action_loader = DataLoader(self.vis_data, batch_size=10, shuffle=False, drop_last=False)
         with torch.no_grad():
             for batch_idx, (data, target, skl, imu, ground, foot_contact, R_R0R, t_R0R, R_RtW) in tqdm(
-                    enumerate(self.vis_loader)):
+                    enumerate(self.action_loader)):
                 data = np.asarray(data)
                 target = np.asarray(target)
                 imu = np.asarray(imu)
@@ -228,16 +231,21 @@ class MMEgo():
                 # data = data_ti.view(batch_size * seq_len, point_num, dim).cpu().numpy()
                 real = target.view(batch_size * seq_len, self.joint_num, 3).cpu().numpy()
                 pred = pred_l.view(batch_size * seq_len, self.joint_num, 3).cpu().numpy()
-                real = real @ R_RtW.squeeze(0)
-                pred = pred @ R_RtW.squeeze(0)
+                R_RtW = R_RtW.reshape((batch_size * seq_len, 3, 3))
+                real = real @ R_RtW
+                pred = pred @ R_RtW
+                # real = real @ R_RtW.squeeze(0)
+                # pred = pred @ R_RtW.squeeze(0)
                 ground = ground.reshape(batch_size * seq_len, 4)
                 floor_level = ground[:, -1]
                 # show_s_2=torso_l.view(batch_size * seq_len, joint_num, 3).cpu().numpy()
-                utils.draw3Dpose_frames(pred, real, index, floor_level)
+                # utils.draw3Dpose_frames(pred, real, index, floor_level)
+                utils.draw3Dpose_action_gif(pred, real, batch_idx, floor_level)
+
                 index += batch_size * seq_len
 
 
 if __name__ == '__main__':
     mmEgo = MMEgo()
-    # mmEgo.eval_all_skeleton()
-    mmEgo.eval_model()
+    mmEgo.eval_all_skeleton()
+    # mmEgo.eval_model()

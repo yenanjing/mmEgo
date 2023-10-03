@@ -5,6 +5,7 @@ This repository holds the codebase, dataset and models for the paper:
 **Egocentric Human Pose Estimation using Head-mounted mmWave Radar**.
 
 The structure of the repository is listed as following:
+
 ```
 |-- Config
 |   |-- config.py
@@ -121,5 +122,8 @@ python main.py --train --network Upper_Net [--log_dir <integer-based index>] [--
 python main.py --train --network Lower_Net [--log_dir <integer-based index>] [--load_IMU_path <model folder>] [--load_Upper_path <model folder>]
 ```
 
-You can modify the training parameters such as ```num_epoches```, ```batch_size```, ```lr``` and ```device``` in the command line or configuration files. The order of priority is:  command line > config file > default parameter. For more information, use ```python main.py -h```.
+You can modify the training parameters such as ```num_epoches```, ```batch_size```, ```lr``` and ```device``` in the
+command line or configuration files. The order of priority is:  command line > config file > default parameter. For more
+information, use ```python main.py -h```.
+
 For any question, feel free to contact.
