@@ -89,7 +89,7 @@ Per Joint Localization Error(cm): [3.35941255 2.87198341 2.56157758 2.30499098 2
 
 And the plot window displaying the error bar chart for each joint, is as follows:
 <p align="center">
-    <img src="Resource/Img/test_per_joint_error.png", width="1200">
+    <img src="Resource/Img/infer_result.png", width="1200">
 </p>
 
 ### Qualitative results
