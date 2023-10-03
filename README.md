@@ -104,7 +104,7 @@ python main.py --infer --vis
 The expected output should be a comparison between the predicted skeleton and the ground truth skeleton for each frame,
 as shown below:
 <p align="center">
-    <img src="Resource/Img/visualization.png", width="1200">
+    <img src="Resource/Img/skl_animation.gif", width="1200">
 </p>
 
 ## Train:

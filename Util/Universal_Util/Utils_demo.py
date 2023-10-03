@@ -1,11 +1,13 @@
-import matplotlib.pyplot as plt
-import matplotlib.cm
-import os
-import numpy as np
 import itertools
 import math
-import torch
+import os
+
+import matplotlib.cm
+import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
+import torch
+
 from Config.config_demo import Config
 
 
@@ -147,7 +149,7 @@ def draw3Dupper_pose(pose_3d, ax, floor):  # blue, orange
 
 
 # 绘制单帧pose
-def draw3Dpose(pose_3d, ax, floor):  # blue, orange
+def draw3Dpose(pose_3d, ax, floor, color='green'):  # blue, orange
     pose_3d[:, 1] -= 0.2
     # 计算骨架投影到地面上的位置
     floor_level = -1 * floor
@@ -159,13 +161,12 @@ def draw3Dpose(pose_3d, ax, floor):  # blue, orange
     X, Y = np.meshgrid(x, y)
     Z = np.full(X.shape, floor_level)
 
-
     for i in Config.skeleton_all:
         x, y, z = [np.array([pose_3d[i[0], j], pose_3d[i[1], j]]) for j in range(3)]
         # ax = fig.add_subplot(111, projection='3d')
         ax.plot(x, y, z, lw=6, c='black', zorder=2)
 
-    ax.scatter(pose_3d[:, 0], pose_3d[:, 1], pose_3d[:, 2], c='green', s=60, marker='o', zorder=3, alpha=1.0)
+    ax.scatter(pose_3d[:, 0], pose_3d[:, 1], pose_3d[:, 2], c=color, s=60, marker='o', zorder=3, alpha=1.0)
 
     ax.set_xlim3d([-RADIUS + xroot + 0.5, RADIUS + xroot - 0.5])
     ax.set_zlim3d([-RADIUS + zroot, RADIUS + zroot - 0.2])
@@ -175,14 +176,16 @@ def draw3Dpose(pose_3d, ax, floor):  # blue, orange
     ax.set_ylabel("y")
     ax.set_zlabel("z")
 
-#按动作绘制pose gif
-def draw3Dpose_action_gif(pred, real, action_index, floor):
 
+# 按动作绘制pose gif
+def draw3Dpose_action_gif(pred, real, action_index, floor):
+    import imageio.v2 as imageio
     i = 0
     fig1 = plt.figure(1, figsize=(10, 6))
-    fig1.suptitle('action: %d' % action_index, fontsize=16)
+    fig1.suptitle('action: %d' % (action_index+1), fontsize=16)
     ax1 = fig1.add_subplot(121, projection='3d')
     ax2 = fig1.add_subplot(122, projection='3d')
+    # image_list = []
     while i < pred.shape[0]:
         ax1.clear()
         ax2.clear()
@@ -199,15 +202,21 @@ def draw3Dpose_action_gif(pred, real, action_index, floor):
         ax2.axis('on')
         ax2.set_box_aspect([1.5, 1.5, 1.5])  # 设置缩放比例
         draw3Dpose(pred[i], ax1, floor[i])
-        draw3Dpose(real[i], ax2, floor[i])
+        draw3Dpose(real[i], ax2, floor[i], color='red')
 
         # fig1.show()
-        plt.pause(1)
+        plt.pause(0.6)
+        # plt.savefig('./temp.png')
+        # plt.close()
+        # image_list.append(imageio.imread('./temp.png'))
         # plt.ion()
         i += 1
 
+    # imageio.mimsave('./skl_animation.gif', image_list, duration=0.6)
     plt.tight_layout()
     plt.show()
+
+
 # 绘制多帧pose
 def draw3Dpose_frames(pred, real, index, floor):
     # 分别绘制预测骨架和真实骨架
