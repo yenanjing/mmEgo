@@ -190,11 +190,11 @@ class MMEgo():
         self.Upper_net.eval()
         self.model.eval()
         index = 0
-        self.action_data = PosePC(train=False, vis=True, batch_length=self.frame_no)
-        self.action_loader = DataLoader(self.vis_data, batch_size=10, shuffle=False, drop_last=False)
+        action_data = PoseByAction(train=False, vis=True, batch_length=self.frame_no)
+        action_loader = DataLoader(action_data, batch_size=Config.batch_per_action, shuffle=False, drop_last=False)
         with torch.no_grad():
             for batch_idx, (data, target, skl, imu, ground, foot_contact, R_R0R, t_R0R, R_RtW) in tqdm(
-                    enumerate(self.action_loader)):
+                    enumerate(action_loader)):
                 data = np.asarray(data)
                 target = np.asarray(target)
                 imu = np.asarray(imu)

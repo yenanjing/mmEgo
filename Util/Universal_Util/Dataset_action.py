@@ -6,7 +6,8 @@ import numpy as np
 import scipy.io as scio
 from torch.utils.data import Dataset
 
-from Config.config import Config
+# from Config.config import Config
+from Config.config_demo import Config
 
 
 class PoseByAction(Dataset):
@@ -22,7 +23,7 @@ class PoseByAction(Dataset):
         if batch_length is not None:
             self.frame_no = batch_length
 
-        self.batch_per_action = 10
+        self.batch_per_action = Config.batch_per_action
         self.body_length_all = []
         self.initial_body = None
         self.initial_body_unit = None

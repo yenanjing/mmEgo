@@ -19,6 +19,7 @@ class Config:
     joint_num_upper = 15
     joint_num_lower = 8
     num_action = 13
+    batch_per_action = 3
     IMU_used = True
     IMU_pretrained = False
     Upper_pretrained = False

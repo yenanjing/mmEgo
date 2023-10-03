@@ -25,11 +25,15 @@ The structure of the repository is listed as following:
 |-- Resource
 |   |-- Img
 |   |-- Pretrained_model
+|       |-- IMU_Net
+|       |-- Lower_Net
+|       |-- Upper_Net
 |   |-- Sample_data
 |-- Util
 |   |-- Universal_Util
 |   |   |-- Dataset.py
 |   |   |-- Dataset_sample.py
+|   |   |-- Dataset_action.py
 |   |   |-- Utils.py
 |   |   |-- Utils_demo.py
 |   |-- Visual_Util
