@@ -1,4 +1,5 @@
 import argparse
+from Config.config import Config
 
 if __name__ == '__main__':
 
@@ -8,10 +9,31 @@ if __name__ == '__main__':
     parser.add_argument('--train', action='store_true', help='Train model')
     parser.add_argument('--infer', action='store_true', help='Perform inference')
     parser.add_argument('--vis', action='store_true', help='Visualization')
+    parser.add_argument("--epochs", type=int, help="Number of epochs")
+    parser.add_argument("--lr", type=float, help="Learning rate")
+    parser.add_argument("--batch_size", type=int, help="Batch size")
+    parser.add_argument('--log_dir', type=int, help='Path to save the model and report')
+    parser.add_argument('--load_IMU_path', type=str, help='Path to load IMU_Net')
+    parser.add_argument('--load_Upper_path', type=str, help='Path to load Upper_Net')
+    parser.add_argument('--load_Lower_path', type=str, help='Path to load Lower_Net')
+
+
 
     args = parser.parse_args()
     if args.train:
+        if args.epochs is not None:
+            Config.epochs = args.epochs
+        if args.log_dir is not None:
+            Config.Idx = args.log_dir
+        if args.load_IMU_path is not None:
+            Config.model_IMU_path = args.load_IMU_path
+        if args.load_Upper_path is not None:
+            Config.model_upper_path = args.load_Upper_path
+        if args.load_Lower_path is not None:
+            Config.model_lower_path = args.load_Lower_path
+
         if args.network == 'IMU_Net':
+
             from Processor.Train.Train_IMU import MMEgo
 
             processor = MMEgo()

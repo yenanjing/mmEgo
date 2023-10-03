@@ -112,13 +112,13 @@ You can use the following commands to train the IMU_Net, Upper_Net, Lower_Net, r
 
 ```shell
 # train IMU_Net
-python main.py --train --network IMU_Net
+python main.py --train --network IMU_Net [--log_dir <integer-based index>]
 
 # train Upper_Net
-python main.py --train --network Upper_Net
+python main.py --train --network Upper_Net [--log_dir <integer-based index>] [--load_IMU_path <model folder>]
 
 # train Lower_Net
-python main.py --train --network Lower_Net
+python main.py --train --network Lower_Net [--log_dir <integer-based index>] [--load_IMU_path <model folder>] [--load_Upper_path <model folder>]
 ```
 
 For any question, feel free to contact.

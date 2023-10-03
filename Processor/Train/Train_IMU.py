@@ -43,7 +43,7 @@ class MMEgo:
             self.device = 'cuda:%d' % 0
         else:
             self.device = 'cpu'
-        self.num_epochs = 600
+        self.num_epochs = Config.epochs
         self.save_slot = 50
         self.frame_no = Config.frame_no
         self.learning_rate_imu = 3e-5
@@ -59,18 +59,17 @@ class MMEgo:
         self.targetPath = os.path.join(_current_path, './report/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
-        else:
-            print('路径已经存在！')
+        print('report saved in ' + self.targetPath)
         self.targetPath = os.path.join(_current_path, './model/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
-        else:
-            print('路径已经存在！')
+        print('model saved in ' + self.targetPath)
+
         self.targetPath = os.path.join(_current_path, './lossAndacc/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
-        else:
-            print('路径已经存在！')
+        print('Loss and accuracy saved in ' + self.targetPath)
+
         self.loss_geodesic = GeodesicLoss()
         self.optimizer_IMU = torch.optim.Adam(self.model_IMU.parameters(), lr=self.learning_rate_imu,
                                               weight_decay=0.001)

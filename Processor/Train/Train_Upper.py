@@ -23,7 +23,7 @@ class MMEgo():
             self.device = 'cuda:%d' % 0
         else:
             self.device = 'cpu'
-        self.num_epochs = 600
+        self.num_epochs = Config.epochs
         self.save_slot = 50
         self.frame_no = Config.frame_no
         self.learning_rate = 3e-5

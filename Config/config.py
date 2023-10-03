@@ -2,6 +2,9 @@ r"""
     Config for paths, joint set, and parameters.
 """
 import numpy as np
+import os
+
+_current_path = os.path.dirname(__file__)
 
 
 class Config:
@@ -10,6 +13,7 @@ class Config:
 
     frame_no = 20
     pc_no = 128
+    epochs = 600
     lower_pc_no = 64
     joint_num_all = 21
     joint_num_upper = 15
@@ -40,10 +44,17 @@ class Config:
 
     hand_joint_map = [7, 6, 11, 10]  # 左手腕，左手肘，右手腕，右手肘
 
-    model_IMU_path = './model/300/epoch173_batch20frame20lr3e-05.pth'
+    # model_IMU_path = './model/300/epoch173_batch20frame20lr3e-05.pth'
+    #
+    # # model_upper_path = './model/301/epoch349_batch20frame20lr3e-05.pth'
+    # # model_upper_path = './model/301/epoch337_batch20frame20lr3e-05.pth'
+    # model_upper_path = './model/304/epoch451_batch20frame20lr3e-05.pth'
 
-    # model_upper_path = './model/301/epoch349_batch20frame20lr3e-05.pth'
-    # model_upper_path = './model/301/epoch337_batch20frame20lr3e-05.pth'
-    model_upper_path = './model/304/epoch451_batch20frame20lr3e-05.pth'
+    model_IMU_path = os.path.join(_current_path,
+                                  '../Resource/Pretrained_model/IMU_Net/epoch173_batch20frame20lr3e-05.pth')
+    model_upper_path = os.path.join(_current_path,
+                                    '../Resource/Pretrained_model/Upper_Net/epoch451_batch20frame20lr3e-05.pth')
+    model_lower_path = os.path.join(_current_path,
+                                    '../Resource/Pretrained_model/Lower_Net/epoch161_batch20frame20lr0.0003.pth')
 
     dataset_random_seed = 1
