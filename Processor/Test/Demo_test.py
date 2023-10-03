@@ -10,7 +10,9 @@ from Config.config_demo import Config
 from Net.IMU_Net import IMUNet
 from Net.Lower_Net import LowerNet
 from Net.Upper_Net import UpperNet
-from Util.Universal_Util.Dataset_sample import PosePC
+# from Util.Universal_Util.Dataset_sample import PosePC
+from Util.Universal_Util.Dataset_test import PosePC
+
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 

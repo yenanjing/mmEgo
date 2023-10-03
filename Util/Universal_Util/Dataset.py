@@ -23,8 +23,8 @@ class PosePC(Dataset):
             self.frame_no = batch_length
 
         self.body_length_all = []
-        self.initial_body = []
-        self.initial_body_unit = []
+        self.initial_body = None
+        self.initial_body_unit = None
         # 选择21个关节点
         self.joint_selection = [0, 1, 2, 3, 4, 5, 6, 7, 11, 12, 13, 14, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         self.skeleton = Config.skeleton_all.tolist()
@@ -171,10 +171,14 @@ class PosePC(Dataset):
                             for (parent, child) in self.skeleton:
                                 body = pc_xyz_key[parent] - pc_xyz_key[child]
                                 body_length.append(body)
-                            self.initial_body = body_length
-                            body_np = np.asarray(self.initial_body)
-                            self.initial_body_unit = (
-                                    body_np.transpose() / np.linalg.norm(body_np, axis=-1)).transpose().tolist()
+                            if self.initial_body is None:
+                                self.initial_body = body_length
+                                body_np = np.asarray(self.initial_body)
+                                self.initial_body_unit = body_np / np.linalg.norm(body_np, axis=-1)[:, None].tolist()
+                            else:
+                                body_np = np.asarray(body_length)
+                                body_norm = np.linalg.norm(body_np, axis=-1)
+                                body_length = (body_norm[:, None] * np.asarray(self.initial_body_unit)).tolist()
                             st = 1
 
                         R_btc = data['R_btc']

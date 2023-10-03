@@ -167,10 +167,14 @@ class PosePC(Dataset):
                         for (parent, child) in self.skeleton:
                             body = pc_xyz_key[parent] - pc_xyz_key[child]
                             body_length.append(body)
-                        self.initial_body = body_length
-                        body_np = np.asarray(self.initial_body)
-                        self.initial_body_unit = (
-                                body_np.transpose() / np.linalg.norm(body_np, axis=-1)).transpose().tolist()
+                        if self.initial_body is None:
+                            self.initial_body = body_length
+                            body_np = np.asarray(self.initial_body)
+                            self.initial_body_unit = body_np / np.linalg.norm(body_np, axis=-1)[:, None].tolist()
+                        else:
+                            body_np = np.asarray(body_length)
+                            body_norm = np.linalg.norm(body_np, axis=-1)
+                            body_length = (body_norm[:, None] * np.asarray(self.initial_body_unit)).tolist().tolist()
                         st = 1
 
                     R_btc = data['R_btc']
