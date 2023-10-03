@@ -19,10 +19,7 @@ _current_path = os.path.dirname(__file__)
 class MMEgo():
     def __init__(self):
         torch.set_printoptions(profile="full")
-        if torch.cuda.is_available():
-            self.device = 'cuda:%d' % 0
-        else:
-            self.device = 'cpu'
+        self.device = Config.device
         self.num_epochs = Config.epochs
         self.save_slot = 50
         self.frame_no = Config.frame_no

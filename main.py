@@ -11,6 +11,7 @@ if __name__ == '__main__':
     parser.add_argument('--vis', action='store_true', help='Visualization')
     parser.add_argument("--epochs", type=int, help="Number of epochs")
     parser.add_argument("--lr", type=float, help="Learning rate")
+    parser.add_argument("--device", type=str, help="device: [cuda:%d, cpu]")
     parser.add_argument("--batch_size", type=int, help="Batch size")
     parser.add_argument('--log_dir', type=int, help='Path to save the model and report')
     parser.add_argument('--load_IMU_path', type=str, help='Path to load IMU_Net')
@@ -25,6 +26,8 @@ if __name__ == '__main__':
             Config.epochs = args.epochs
         if args.log_dir is not None:
             Config.Idx = args.log_dir
+        if args.device is not None:
+            Config.device = args.device
         if args.load_IMU_path is not None:
             Config.model_IMU_path = args.load_IMU_path
         if args.load_Upper_path is not None:

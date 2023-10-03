@@ -3,6 +3,7 @@ r"""
 """
 import numpy as np
 import os
+import torch
 
 _current_path = os.path.dirname(__file__)
 
@@ -23,6 +24,12 @@ class Config:
     IMU_pretrained = False
     Upper_pretrained = False
     Lower_pretrained = False
+
+    if torch.cuda.is_available():
+        device = 'cuda:%d' % 0
+    else:
+        device = 'cpu'
+
 
     skeleton_all = np.asarray(
         [[20, 3], [3, 2], [2, 1], [2, 4], [2, 8], [4, 5], [5, 6], [6, 7], [8, 9], [9, 10], [10, 11],
