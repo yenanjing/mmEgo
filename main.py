@@ -24,6 +24,10 @@ if __name__ == '__main__':
     if args.train:
         if args.epochs is not None:
             Config.epochs = args.epochs
+        if args.lr is not None:
+            Config.lr = args.lr
+        if args.batch_size is not None:
+            Config.batch_size = args.batch_size
         if args.log_dir is not None:
             Config.Idx = args.log_dir
         if args.device is not None:

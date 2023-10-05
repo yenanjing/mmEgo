@@ -15,6 +15,8 @@ class Config:
     frame_no = 20
     pc_no = 128
     epochs = 600
+    lr = 3e-5
+    batch_size = 20
     lower_pc_no = 64
     joint_num_all = 21
     joint_num_upper = 15

@@ -8,6 +8,8 @@ import torch
 import seaborn as sns
 from Config.config import Config
 
+_current_path = os.path.dirname(__file__)
+
 
 class EarlyStopping:
     def __init__(self, patience=5, delta=0, verbose=False):
@@ -375,7 +377,7 @@ def draw_fig(lis, name, epoch, begin, idx=Config.Idx, lis_1=None):
         plt.xlabel('epoch', fontsize=15)
         plt.ylabel('Eval loss', fontsize=15)
         plt.grid()
-        plt.savefig("./lossAndacc/{}/Eval_loss.png".format(idx))
+        plt.savefig(os.path.join(_current_path, "../../Processor/Train/lossAndacc/{}/Eval_loss.png".format(idx)))
         plt.show()
     elif name == "acc":
         plt.cla()
@@ -384,7 +386,7 @@ def draw_fig(lis, name, epoch, begin, idx=Config.Idx, lis_1=None):
         plt.xlabel('epoch', fontsize=15)
         plt.ylabel('Average Joint Localization Error (m)', fontsize=15)
         plt.grid()
-        plt.savefig("./lossAndacc/{}/Eval_accuracy.png".format(idx))
+        plt.savefig(os.path.join(_current_path, "../../Processor/Train/lossAndacc/{}/Eval_accuracy.png".format(idx)))
         plt.show()
 
 
@@ -397,7 +399,8 @@ def draw_bar(l, idx, name):
         plt.ylabel('Average Localization Error (m)', fontsize=15)
         plt.bar(range(0, len(l), 1), l)
         plt.xticks(range(0, len(l), 1))
-        plt.savefig("./lossAndacc/{}/Eval_joint_accuracy.png".format(idx))
+        plt.savefig(os.path.join(_current_path, "../../Processor/Train/lossAndacc/{}/Eval_joint_accuracy.png".format(idx)))
+
         plt.show()
     elif name == 'angle':
         # plt.cla()
@@ -407,17 +410,8 @@ def draw_bar(l, idx, name):
         plt.ylabel('Rotation Error (°)', fontsize=15)
         plt.bar(range(0, len(l), 1), l, width=0.6, tick_label=skeleton_all)
         # plt.xticks(skeleton_all)
-        plt.savefig("./lossAndacc/{}/Eval_joint_angle.png".format(idx))
+        plt.savefig(os.path.join(_current_path, "../../Processor/Train/lossAndacc/{}/Eval_joint_angle.png".format(idx)))
         plt.show()
-    elif name == 'ground':
-        plt.cla()
-        plt.xlabel('Ground coefficient', fontsize=15)
-        plt.ylabel('Average Minus Error', fontsize=15)
-        plt.bar(range(0, len(l), 1), l, width=0.5, tick_label=['a', 'b', 'c', 'd'])
-        # plt.xticks(range(0, len(l),1))
-        plt.savefig("./lossAndacc/{}/Eval_Ground_accuracy.png".format(idx))
-        plt.show()
-
 
 # 绘制混淆矩阵
 def plot_confusion_matrix(cm, classes, title, idx, normalize=True, cmap='Blues'):
