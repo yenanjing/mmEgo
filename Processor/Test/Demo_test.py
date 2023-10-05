@@ -179,7 +179,7 @@ class MMEgo():
         print('Average LowerBody Joint Localization Error(cm): {}'.format(accu_lower_l * 100))
         print('Average Joint Rotation Error(°): {}'.format(sum(angle_ll) / len(angle_ll)))
         print('Per Joint Localization Error(cm): {}'.format(accu_ll * 100))
-        results = accu_ll.tolist()
+        results = (accu_ll*100).tolist()
         # results.append(eval_accu.item())
         utils.draw_bar(results*100, self.Idx, 'pos')
         return eval_loss, eval_loss_l, eval_accu, accu_lower_l, accu_ll, angle_ll
