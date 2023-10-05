@@ -68,7 +68,7 @@ class MMEgo:
         print('Loss and accuracy saved in ' + self.targetPath)
 
         self.loss_geodesic = GeodesicLoss()
-        self.optimizer_IMU = torch.optim.Adam(self.model_IMU.parameters(), lr=self.learning_rate_imu,
+        self.optimizer_IMU = torch.optim.Adam(self.model_IMU.parameters(), lr=self.learning_rate,
                                               weight_decay=0.001)
         self.train_data = PosePC(batch_length=self.frame_no)
         self.train_loader = DataLoader(self.train_data, batch_size=self.batchsize, shuffle=True, drop_last=False)
