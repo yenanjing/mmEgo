@@ -407,7 +407,7 @@ def draw_bar(l, idx, name):
 
         # ax1 = plt.subplot(gs[0])
         ax1.set_xlabel('Joint Index', fontsize=15)
-        ax1.set_ylabel('Average Localization Error (m)', fontsize=15)
+        ax1.set_ylabel('Average Localization Error (cm)', fontsize=15)
         ax1.bar(range(0, len(l), 1), l)
         ax1.set_xticks(range(0, len(l), 1))
 

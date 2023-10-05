@@ -181,7 +181,7 @@ class MMEgo():
         print('Per Joint Localization Error(cm): {}'.format(accu_ll * 100))
         results = accu_ll.tolist()
         # results.append(eval_accu.item())
-        utils.draw_bar(results, self.Idx, 'pos')
+        utils.draw_bar(results*100, self.Idx, 'pos')
         return eval_loss, eval_loss_l, eval_accu, accu_lower_l, accu_ll, angle_ll
 
     def eval_all_skeleton(self):

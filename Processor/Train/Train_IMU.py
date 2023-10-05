@@ -43,7 +43,7 @@ class MMEgo:
         self.num_epochs = Config.epochs
         self.save_slot = 50
         self.frame_no = Config.frame_no
-        self.learning_rate_imu = 3e-5
+        self.learning_rate= 3e-5
         self.batchsize = 20
         self.joint_num = Config.joint_num_all
         self.upper_joint_num = Config.joint_num_upper
