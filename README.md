@@ -67,6 +67,24 @@ git clone https://github.com/yenanjing/mmEgo_Rev.git
 The pre-processed sample data is stored in the `Resource/Sample_data` directory, which includes thirteen actions
 collected in the paper. Additional data will be placed in Dropbox in the future.
 
+The data structure is as follows: 
+```
+|-- Action: 01
+|   |-- 03
+|       |-- ti_imu_key_003.mat
+|       |-- ...
+|       |-- ti_imu_key_096.mat
+|   |-- 04
+|   |-- ...
+|   |-- 20
+|-- 02
+|-- ...
+|-- 13 
+```
+Under 13 action folders, each action has 18 subfolders, and each subfolder contains
+data for that action's continuous 10 seconds. Each .mat file stores one frame of mmWave point cloud, IMU data,
+and ground truth.
+
 ## Test:
 
 ### Quantitative results
