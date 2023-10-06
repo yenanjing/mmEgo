@@ -127,66 +127,66 @@ The expected output should be a comparison between the predicted skeleton and th
 as shown below:
 <table style="width:100%; table-layout:fixed;">
 <tr>
-    <td><img src="Resource/Img/skl_animation_walking%20in%20place.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_1.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_walking%20in%20place.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_1.gif" width=300> </td>
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_walking.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_2.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_walking.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_2.gif" width=300> </td>
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_swing%20arms.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_3.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_swing%20arms.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_3.gif" width=300> </td>
 
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_shaking%20head.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_4.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_shaking%20head.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_4.gif" width=300> </td>
 
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_nodding%20head.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_5.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_nodding%20head.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_5.gif" width=300> </td>
 
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_turning%20head.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_6.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_turning%20head.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_6.gif" width=300> </td>
 
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_looking%20left%20and%20right%20when%20walking%20in%20place.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_7.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_looking%20left%20and%20right%20when%20walking%20in%20place.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_7.gif" width=300> </td>
 
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_looking%20left%20and%20right%20when%20walking%20in%20place.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_8.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_looking%20left%20and%20right%20when%20walking%20in%20place.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_8.gif" width=300> </td>
 
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_looking%20up%20and%20down%20when%20swing%20arms.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_9.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_looking%20up%20and%20down%20when%20swing%20arms.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_9.gif" width=300> </td>
 
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_looking%20right%20and%20left%20when%20swing%20arms.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_10.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_looking%20right%20and%20left%20when%20swing%20arms.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_10.gif" width=300> </td>
 
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_lunge.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_11.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_lunge.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_11.gif" width=300> </td>
 
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_high%20leg%20raise.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_12.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_high%20leg%20raise.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_12.gif" width=300> </td>
 
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_squat.gif" width="600"> </td>
-    <td><img src="Resource/Img/video_action_13.gif" width="600"> </td>
+    <td><img src="Resource/Img/skl_animation_squat.gif" width=300> </td>
+    <td><img src="Resource/Img/video_action_13.gif" width=300> </td>
 
 </tr>
 </table>
