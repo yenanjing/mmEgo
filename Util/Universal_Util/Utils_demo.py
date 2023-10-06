@@ -9,7 +9,7 @@ import seaborn as sns
 import torch
 
 from Config.config_demo import Config
-
+import imageio.v2 as imageio
 
 class EarlyStopping:
     def __init__(self, patience=5, delta=0, verbose=False):
@@ -179,13 +179,16 @@ def draw3Dpose(pose_3d, ax, floor, color='green'):  # blue, orange
 
 # 按动作绘制pose gif
 def draw3Dpose_action_gif(pred, real, action_index, floor):
-    import imageio.v2 as imageio
-    i = 0
+    action_map = {1: 'walking in place', 2: 'walking', 3: 'swing arms', 4: 'shaking head', 5: 'nodding head',
+                  6: 'turning head', 7: 'looking left and right when walking in place',
+                  8: 'looking up and down when walking in place', 9: 'looking up and down when swing arms',
+                  10: 'looking left and right when swing arms', 11: 'lunge', 12: 'high leg raise', 13: 'squat'}
     fig1 = plt.figure(1, figsize=(10, 6))
-    fig1.suptitle('action: %d' % (action_index+1), fontsize=16)
+    fig1.suptitle('action: %s' % (action_map[action_index + 1]), fontsize=16)
     ax1 = fig1.add_subplot(121, projection='3d')
     ax2 = fig1.add_subplot(122, projection='3d')
-    # image_list = []
+    image_list = []
+    i = 0
     while i < pred.shape[0]:
         ax1.clear()
         ax2.clear()
@@ -205,16 +208,16 @@ def draw3Dpose_action_gif(pred, real, action_index, floor):
         draw3Dpose(real[i], ax2, floor[i], color='red')
 
         # fig1.show()
-        plt.pause(0.6)
-        # plt.savefig('./temp.png')
+        # plt.pause(0.6)
+        plt.savefig('./temp.png')
         # plt.close()
-        # image_list.append(imageio.imread('./temp.png'))
+        image_list.append(imageio.imread('./temp.png'))
         # plt.ion()
         i += 1
 
-    # imageio.mimsave('./skl_animation.gif', image_list, duration=0.6)
-    plt.tight_layout()
-    plt.show()
+    imageio.mimsave('./skl_animation_%s.gif' % action_map[action_index+1], image_list, duration=0.6)
+    # plt.tight_layout()
+    # plt.show()
 
 
 # 绘制多帧pose

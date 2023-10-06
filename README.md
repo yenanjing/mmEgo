@@ -64,7 +64,7 @@ git clone https://github.com/yenanjing/mmEgo_Rev.git
 
 ## Data:
 
-The pre-processed sample data is stored in the `Resource/Sample_data` directory, which includes thirteen actions
+The pre-processed sample data is stored in the `Resource/Sample_data` directory, which includes 13 actions
 collected in the paper. Additional data will be placed in Dropbox in the future.
 
 The data structure is as follows: 
@@ -125,9 +125,62 @@ python main.py --infer --vis
 
 The expected output should be a comparison between the predicted skeleton and the ground truth skeleton for each frame,
 as shown below:
-<p align="center">
-    <img src="Resource/Img/skl_animation.gif", width="1200">
-</p>
+<table style="width:100%; table-layout:fixed;">
+<tr>
+    <td><img src="Resource/Img/skl_animation_walking%20in%20place.gif" width="600"> </td>
+    <td></td>
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_walking.gif" width="600"> </td>
+    <td></td>
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_swing%20arms.gif" width="600"> </td>
+    <td></td>
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_shaking%20head.gif" width="600"> </td>
+    <td></td>
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_nodding%20head.gif" width="600"> </td>
+    <td></td>
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_turning%20head.gif" width="600"> </td>
+    <td></td>
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_looking%20left%20and%20right%20when%20walking%20in%20place.gif" width="600"> </td>
+    <td></td>
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_looking%20up%20and%20down%20when%20swing%20arms.gif" width="600"> </td>
+    <td></td>
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_looking%20right%20and%20left%20when%20swing%20arms.gif" width="600"> </td>
+    <td></td>
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_lunge.gif" width="600"> </td>
+    <td></td>
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_high%20leg%20raise.gif" width="600"> </td>
+    <td></td>
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_squat.gif" width="600"> </td>
+    <td></td>
+</tr>
+</table>
+
+[//]: # (<p align="center">)
+
+[//]: # (    <img src="Resource/Img/skl_animation_walking%20in%20place.gif", width="1200">)
+
+[//]: # (</p>)
 
 ## Train:
 
@@ -135,13 +188,13 @@ You can use the following commands to train the IMU_Net, Upper_Net, Lower_Net, r
 
 ```shell
 # train IMU_Net
-python main.py --train --network IMU_Net [--log_dir <integer-based index>]
+python main.py --train --network IMU_Net [--log_dir ${INTEGER INDEX}]
 
 # train Upper_Net
-python main.py --train --network Upper_Net [--log_dir <integer-based index>] [--load_IMU_path <model folder>]
+python main.py --train --network Upper_Net [--log_dir ${INTEGER INDEX}] [--load_IMU_path ${PATH_TO_MODEL}]
 
 # train Lower_Net
-python main.py --train --network Lower_Net [--log_dir <integer-based index>] [--load_IMU_path <model folder>] [--load_Upper_path <model folder>]
+python main.py --train --network Lower_Net [--log_dir ${INTEGER INDEX}] [--load_IMU_path ${PATH_TO_MODEL}] [--load_Upper_path ${PATH_TO_MODEL}]
 ```
 
 The intermediate results and models generated during training are by default saved in `Processor/Train/model/{index}`,

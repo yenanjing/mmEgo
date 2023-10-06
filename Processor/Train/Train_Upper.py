@@ -39,18 +39,16 @@ class MMEgo():
         self.targetPath = os.path.join(_current_path, './report/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
-        else:
-            print('路径已经存在！')
+        print('report saved in ' + self.targetPath)
         self.targetPath = os.path.join(_current_path, './model/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
-        else:
-            print('路径已经存在！')
+        print('model saved in ' + self.targetPath)
+
         self.targetPath = os.path.join(_current_path, './lossAndacc/%d' % (self.Idx))
         if not os.path.exists(self.targetPath):
             os.makedirs(self.targetPath)
-        else:
-            print('路径已经存在！')
+        print('Loss and accuracy saved in ' + self.targetPath)
         self.loss_fn = torch.nn.SmoothL1Loss(reduction='sum')
         self.loss_fn2 = torch.nn.L1Loss(reduction='sum')
         self.model = UpperNet().to(self.device)
