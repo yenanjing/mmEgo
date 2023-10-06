@@ -21,24 +21,24 @@ if __name__ == '__main__':
 
 
     args = parser.parse_args()
-    if args.train:
-        if args.epochs is not None:
-            Config.epochs = args.epochs
-        if args.lr is not None:
-            Config.lr = args.lr
-        if args.batch_size is not None:
-            Config.batch_size = args.batch_size
-        if args.log_dir is not None:
-            Config.Idx = args.log_dir
-        if args.device is not None:
-            Config.device = args.device
-        if args.load_IMU_path is not None:
-            Config.model_IMU_path = args.load_IMU_path
-        if args.load_Upper_path is not None:
-            Config.model_upper_path = args.load_Upper_path
-        if args.load_Lower_path is not None:
-            Config.model_lower_path = args.load_Lower_path
 
+    if args.epochs is not None:
+        Config.epochs = args.epochs
+    if args.lr is not None:
+        Config.lr = args.lr
+    if args.batch_size is not None:
+        Config.batch_size = args.batch_size
+    if args.log_dir is not None:
+        Config.Idx = args.log_dir
+    if args.device is not None:
+        Config.device = args.device
+    if args.load_IMU_path is not None:
+        Config.model_IMU_path = args.load_IMU_path
+    if args.load_Upper_path is not None:
+        Config.model_upper_path = args.load_Upper_path
+    if args.load_Lower_path is not None:
+        Config.model_lower_path = args.load_Lower_path
+    if args.train:
         if args.network == 'IMU_Net':
 
             from Processor.Train.Train_IMU import MMEgo
