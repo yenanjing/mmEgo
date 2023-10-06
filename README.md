@@ -64,8 +64,8 @@ git clone https://github.com/yenanjing/mmEgo_Rev.git
 
 ## Data:
 
-The pre-processed sample data is stored in the `Resource/Sample_data` directory, which includes 13 actions
-collected in the paper. Additional data will be placed in Dropbox in the future.
+The pre-processed data for training and testing is stored in the `Resource/Sample_data` directory, which includes 13 actions
+collected in the paper.  
 
 The data structure is as follows: 
 ```
@@ -81,8 +81,7 @@ The data structure is as follows:
 |-- ...
 |-- 13 
 ```
-Under 13 action folders, each action has 18 subfolders, and each subfolder contains
-data for that action's continuous 10 seconds. Each .mat file stores one frame of mmWave point cloud, IMU data,
+At the top-level, there are 13 folders, each of which contains data of a specific action. Each action folder has 18 subfolders containing 18 snippets of the action. In a snippet, the action is repeated for 10 seconds. Each .mat file stores one frame of mmWave point cloud, IMU data,
 and ground truth.
 
 ## Test:
