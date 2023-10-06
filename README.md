@@ -53,7 +53,7 @@ Todo
 - PyTorch
 - Other Python libraries can be installed by `pip install -r requirements.txt`
 
-****Tips:** If you don't want to set up the environment locally, you can use Google's Colab service to run
+****Tips:** If you cannot set up the environment locally, you can use the Google's Colab service to run
 this [notebook](https://colab.research.google.com/drive/1Y8gPFRGWQudmVw7DBKW0JkgehBoV7BoH?usp=sharing).**
 
 ## Installation:
@@ -88,7 +88,7 @@ and ground truth.
 
 ### Quantitative results
 
-You can use the following command to test with pose estimation quantization results.
+You can use the following command to run the test with our pretrained model. The results are the average ioint localization error of all test samples.
 
 ```shell
 python main.py --infer
@@ -116,14 +116,14 @@ And the plot window displaying the error bar chart for each joint, is as follows
 
 ### Qualitative results
 
-You can use the following command to test with pose estimation visualization results
+You can use the following command to visualize the pose estimation results.
 
 ```shell
 python main.py --infer --vis
 ```
 
-The expected output should be a comparison between the predicted skeleton and the ground truth skeleton for each frame,
-as shown below:
+The expected output is a comparison between the predicted skeleton (In Green) and the ground truth skeleton (In Red) for each frame. We also demonstrate the correpsonding the video the action. 
+
 <table style="width:100%; table-layout:fixed;">
 <tr>
     <td><img src="Resource/Img/skl_animation_walking%20in%20place.gif" width=300> </td>
