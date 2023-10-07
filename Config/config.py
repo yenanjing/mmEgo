@@ -12,6 +12,7 @@ class Config:
     Idx = 1001  # 实验序号
     pb = 10  # 绘图去除前缀长度
 
+    colab = False
     frame_no = 20
     pc_no = 128
     epochs = 600

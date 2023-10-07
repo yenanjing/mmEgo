@@ -1,5 +1,6 @@
 import argparse
 from Config.config import Config
+from Config.config_demo import Config as Config_demo
 
 if __name__ == '__main__':
 
@@ -9,6 +10,8 @@ if __name__ == '__main__':
     parser.add_argument('--train', action='store_true', help='Train model')
     parser.add_argument('--infer', action='store_true', help='Perform inference')
     parser.add_argument('--vis', action='store_true', help='Visualization')
+    parser.add_argument('--colab', action='store_true', help='Called by colab')
+
     parser.add_argument("--epochs", type=int, help="Number of epochs")
     parser.add_argument("--lr", type=float, help="Learning rate")
     parser.add_argument("--device", type=str, help="device: [cuda:no, cpu]")
@@ -22,6 +25,8 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
+    if args.colab:
+        Config_demo.colab = True
     if args.epochs is not None:
         Config.epochs = args.epochs
     if args.lr is not None:

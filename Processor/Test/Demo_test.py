@@ -242,7 +242,10 @@ class MMEgo():
                 floor_level = ground[:, -1]
                 # show_s_2=torso_l.view(batch_size * seq_len, joint_num, 3).cpu().numpy()
                 # utils.draw3Dpose_frames(pred, real, index, floor_level)
-                utils.draw3Dpose_action_gif(pred, real, batch_idx, floor_level)
+                if Config.colab:
+                    utils.draw3Dpose_action_gif_colab(pred, real, batch_idx, floor_level)
+                else:
+                    utils.draw3Dpose_action_gif(pred, real, batch_idx, floor_level)
 
                 index += batch_size * seq_len
 

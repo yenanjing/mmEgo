@@ -217,6 +217,111 @@ def draw3Dpose_action_gif(pred, real, action_index, floor):
     plt.tight_layout()
     plt.show()
 
+def draw3Dpose_action_gif_colab(pred, real, action_index, floor):
+    from matplotlib import animation, rc
+    from IPython.display import HTML
+    from time import sleep
+    from IPython.display import display, clear_output
+    from matplotlib.animation import FuncAnimation
+
+    # print(1)
+    action_map = {1: 'walking in place', 2: 'walking', 3: 'swing arms', 4: 'shaking head', 5: 'nodding head',
+                  6: 'turning head', 7: 'looking left and right when walking in place',
+                  8: 'looking up and down when walking in place', 9: 'looking up and down when swing arms',
+                  10: 'looking left and right when swing arms', 11: 'lunge', 12: 'high leg raise', 13: 'squat'}
+    # fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6), subplot_kw={'projection': '3d'})
+    # plt.close()
+    # fig.suptitle('action: %s' % (action_map[action_index + 1]), fontsize=16)
+    #
+    # i = 0
+    # pose_3d = pred[0]
+    # RADIUS = 1  # space around the subject
+    # xroot, yroot, zroot = pose_3d[0, 0], pose_3d[0, 1], pose_3d[0, 2]
+    #
+    # ax1.set_xlim3d([-RADIUS + xroot + 0.5, RADIUS + xroot - 0.5])
+    # ax1.set_zlim3d([-RADIUS + zroot, RADIUS + zroot - 0.2])
+    # ax1.set_ylim3d([-RADIUS + yroot + 0.5, RADIUS + yroot - 0.5])
+    # ax1.view_init(elev=16, azim=-107)
+    # ax1.set_xlabel("x")
+    # ax1.set_ylabel("y")
+    # ax1.set_zlabel("z")
+    #
+    # pose_3d = real[0]
+    # xroot, yroot, zroot = pose_3d[0, 0], pose_3d[0, 1], pose_3d[0, 2]
+    #
+    # ax2.set_xlim3d([-RADIUS + xroot + 0.5, RADIUS + xroot - 0.5])
+    # ax2.set_zlim3d([-RADIUS + zroot, RADIUS + zroot - 0.2])
+    # ax2.set_ylim3d([-RADIUS + yroot + 0.5, RADIUS + yroot - 0.5])
+    # ax2.view_init(elev=16, azim=-107)
+    # ax2.set_xlabel("x")
+    # ax2.set_ylabel("y")
+    # ax2.set_zlabel("z")
+    # ax1.set_title('Predicted Skeleton')
+    # # ax1.axis('off')
+    # ax1.axis('on')
+    # ax1.set_box_aspect([1.5, 1.5, 1.5])  # 设置缩放比例
+    # ax2.set_title('Real Skeleton')
+    # # ax2.axis('off')
+    # ax2.axis('on')
+    # ax2.set_box_aspect([1.5, 1.5, 1.5])  # 设置缩放比例
+    #
+    # sc1 = ax1.scatter([], [], [], c='green', s=60, marker='o', zorder=3, alpha=1.0)
+    # lines1 = [ax1.plot([], [], [], lw=6, c='black', zorder=2)[0] for _ in range(len(Config.skeleton_all))]
+    #
+    # sc2 = ax2.scatter([], [], [], c='green', s=60, marker='o', zorder=3, alpha=1.0)
+    # lines2 = [ax2.plot([], [], [], lw=6, c='black', zorder=2)[0] for _ in range(len(Config.skeleton_all))]
+    #
+    # def init():
+    #     sc1.set_offsets([])
+    #     for line in lines1:
+    #         line.set_data([], [])
+    #         line.set_3d_properties([])
+    #     sc2.set_offsets([])
+    #     for line in lines2:
+    #         line.set_data([], [])
+    #         line.set_3d_properties([])
+    #     return sc1, sc2, *lines1, *lines2
+    #
+    # def update(frame):
+    #     pose_3d = pred[frame]
+    #     x, y, z = [np.array([pose_3d[i[0], frame], pose_3d[i[1], frame]]) for i in Config.skeleton_all]
+    #     sc1.set_offsets(pose_3d[:, :2])
+    #     for i, line in enumerate(lines1):
+    #         line.set_data(x[i], y[i])
+    #         line.set_3d_properties(z[i])
+    #     pose_3d = real[frame]
+    #     x, y, z = [np.array([pose_3d[i[0], frame], pose_3d[i[1], frame]]) for i in Config.skeleton_all]
+    #     sc2.set_offsets(pose_3d[:, :2])
+    #     for i, line in enumerate(lines2):
+    #         line.set_data(x[i], y[i])
+    #         line.set_3d_properties(z[i])
+    #     return sc1, *lines1, sc2, *lines2
+    #
+    # anim = FuncAnimation(fig, update, frames=pred.shape[0], init_func=init, blit=True)
+    #
+    # rc('animation', html='jshtml')
+    # anim
+
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6), subplot_kw={'projection': '3d'})
+    fig.suptitle('action: %s' % (action_map[action_index + 1]), fontsize=16)
+
+    for i in range(pred.shape[0]):
+        ax1.clear()
+        ax2.clear()
+
+        ax1.set_title('Predicted Skeleton')
+        ax1.set_box_aspect([1.5, 1.5, 1.5])  # 设置缩放比例
+        ax2.set_title('Real Skeleton')
+        ax2.set_box_aspect([1.5, 1.5, 1.5])  # 设置缩放比例
+        draw3Dpose(pred[i], ax1, floor[i])
+        draw3Dpose(real[i], ax2, floor[i], color='red')
+
+        display(fig)  # 显示图像
+        clear_output(wait=True)  # 清除之前的图像并等待下一帧
+
+        sleep(0.6)  # 等待0.6秒
+
 
 # 绘制多帧pose
 def draw3Dpose_frames(pred, real, index, floor):
@@ -482,43 +587,14 @@ def plot_confusion_matrix(cm, classes, title, idx, normalize=True, cmap='Blues')
 
 
 if __name__ == '__main__':
-    res = np.array([[1., 0., 0., 0., 0., 0.,
-                     0., 0., 0., 0., 0., 0.,
-                     0., ],
-                    [0., 1., 0., 0., 0., 0.,
-                     0., 0., 0., 0., 0., 0.,
-                     0., ],
-                    [0., 0., 0.97, 0, 0.03, 0.,
-                     0., 0., 0., 0., 0., 0.,
-                     0., ],
-                    [0., 0., 0., 1., 0., 0.,
-                     0., 0., 0., 0., 0., 0.,
-                     0., ],
-                    [0., 0., 0., 0., 1., 0.,
-                     0., 0., 0., 0., 0., 0.,
-                     0., ],
-                    [0., 0., 0., 0., 0., 1.,
-                     0., 0., 0., 0., 0., 0.,
-                     0., ],
-                    [0., 0., 0., 0., 0., 0.,
-                     1., 0., 0., 0., 0., 0.,
-                     0., ],
-                    [0., 0., 0., 0., 0., 0.,
-                     0., 1., 0., 0., 0., 0.,
-                     0., ],
-                    [0., 0., 0., 0., 0., 0.,
-                     0., 0., 1., 0., 0., 0.,
-                     0., ],
-                    [0.01, 0., 0., 0., 0., 0.,
-                     0., 0., 0., 0.99, 0., 0.,
-                     0., ],
-                    [0., 0., 0., 0., 0., 0.,
-                     0., 0., 0., 0., 1., 0.,
-                     0., ],
-                    [0., 0., 0., 0., 0., 0.,
-                     0., 0., 0., 0., 0., 1.,
-                     0., ],
-                    [0., 0., 0., 0., 0., 0.,
-                     0., 0., 0., 0., 0., 0.,
-                     1.]])
-    plot_confusion(res)
+
+    from IPython.display import clear_output
+    import matplotlib.pyplot as plt
+    from numpy.random import randn
+    from time import sleep
+
+    for i in range(5):
+        plt.imshow(randn(28, 28))
+        plt.show()
+        sleep(1)
+        clear_output()
