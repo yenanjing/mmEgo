@@ -43,10 +43,6 @@ The structure of the repository is listed as following:
 |-- requirement.txt
 ```
 
-## Visualization：
-
-Todo
-
 ## Requirements:
 
 - Python3 (>3.5)
