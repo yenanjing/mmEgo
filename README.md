@@ -124,7 +124,8 @@ python main.py --infer --vis
 
 The expected output is a comparison between the predicted skeleton (In Green) and the ground truth skeleton (In Red) for each frame. We also demonstrate the correpsonding the video the action. 
 
-<table style="width:100%; table-layout:fixed;">
+<div>
+<table align="center">
 <tr>
     <td><img src="Resource/Img/skl_animation_walking%20in%20place.gif" width=400> </td>
     <td><img src="Resource/Img/video_action_1.gif" width=300> </td>
@@ -188,13 +189,7 @@ The expected output is a comparison between the predicted skeleton (In Green) an
     <td><img src="Resource/Img/video_action_13.gif" width=300> </td>
 
 </tr>
-</table>
-
-[//]: # (<p align="center">)
-
-[//]: # (    <img src="Resource/Img/skl_animation_walking%20in%20place.gif", width="1200">)
-
-[//]: # (</p>)
+</table></div>
 
 ## Train:
 
