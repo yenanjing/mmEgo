@@ -187,7 +187,7 @@ def draw3Dpose_action_gif(pred, real, action_index, floor):
     fig1.suptitle('action: %s' % (action_map[action_index + 1]), fontsize=16)
     ax1 = fig1.add_subplot(121, projection='3d')
     ax2 = fig1.add_subplot(122, projection='3d')
-    image_list = []
+    # image_list = []
     i = 0
     while i < pred.shape[0]:
         ax1.clear()
@@ -209,15 +209,15 @@ def draw3Dpose_action_gif(pred, real, action_index, floor):
 
         # fig1.show()
         # plt.pause(0.6)
-        plt.savefig('./temp.png')
+        # plt.savefig('./temp.png')
         # plt.close()
-        image_list.append(imageio.imread('./temp.png'))
+        # image_list.append(imageio.imread('./temp.png'))
         # plt.ion()
         i += 1
 
-    imageio.mimsave('./skl_animation_%s.gif' % action_map[action_index+1], image_list, duration=0.6)
-    # plt.tight_layout()
-    # plt.show()
+    # imageio.mimsave('./skl_animation_%s.gif' % action_map[action_index+1], image_list, duration=0.6)
+    plt.tight_layout()
+    plt.show()
 
 
 # 绘制多帧pose

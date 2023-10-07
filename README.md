@@ -126,11 +126,11 @@ The expected output is a comparison between the predicted skeleton (In Green) an
 
 <table style="width:100%; table-layout:fixed;">
 <tr>
-    <td><img src="Resource/Img/skl_animation_walking%20in%20place.gif" width=300> </td>
+    <td><img src="Resource/Img/skl_animation_walking%20in%20place.gif" width=400> </td>
     <td><img src="Resource/Img/video_action_1.gif" width=300> </td>
 </tr>
 <tr>
-    <td><img src="Resource/Img/skl_animation_walking.gif" width=300> </td>
+    <td><img src="Resource/Img/skl_animation_walking.gif" width=400> </td>
     <td><img src="Resource/Img/video_action_2.gif" width=300> </td>
 </tr>
 <tr>
