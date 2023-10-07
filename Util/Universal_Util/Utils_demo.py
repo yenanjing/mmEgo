@@ -151,7 +151,6 @@ def draw3Dupper_pose(pose_3d, ax, floor):  # blue, orange
 # 绘制单帧pose
 def draw3Dpose(pose_3d, ax, floor, color='green'):  # blue, orange
     pose_3d[:, 1] -= 0.2
-    # 计算骨架投影到地面上的位置
     floor_level = -1 * floor
     RADIUS = 1  # space around the subject
     xroot, yroot, zroot = pose_3d[0, 0], pose_3d[0, 1], pose_3d[0, 2]
@@ -192,7 +191,6 @@ def draw3Dpose_action_gif(pred, real, action_index, floor):
     while i < pred.shape[0]:
         ax1.clear()
         ax2.clear()
-        # fig1.suptitle('Prediction')
 
         # fig2 = plt.figure(2, figsize=(5, 5))
 
@@ -208,7 +206,7 @@ def draw3Dpose_action_gif(pred, real, action_index, floor):
         draw3Dpose(real[i], ax2, floor[i], color='red')
 
         # fig1.show()
-        # plt.pause(0.6)
+        plt.pause(0.6)
         # plt.savefig('./temp.png')
         # plt.close()
         # image_list.append(imageio.imread('./temp.png'))
