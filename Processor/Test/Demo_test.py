@@ -22,10 +22,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 class MMEgo():
     def __init__(self):
         torch.set_printoptions(profile="full")
-        if torch.cuda.is_available():
-            self.device = 'cuda:%d' % 0
-        else:
-            self.device = 'cpu'
+        self.device = Config.device
         self.num_epochs = 500
         self.save_slot = 50
         self.frame_no = Config.frame_no

@@ -123,6 +123,21 @@ The expected output is a comparison between the predicted skeleton (In Green) an
 <div>
 <table align="center">
 <tr>
+    <td><img src="Resource/Img/skl_animation_lunge.gif" width=400> </td>
+    <td><img src="Resource/Img/video_action_11.gif" width=300> </td>
+
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_high%20leg%20raise.gif" width=400> </td>
+    <td><img src="Resource/Img/video_action_12.gif" width=300> </td>
+
+</tr>
+<tr>
+    <td><img src="Resource/Img/skl_animation_squat.gif" width=400> </td>
+    <td><img src="Resource/Img/video_action_13.gif" width=300> </td>
+
+</tr>
+<tr>
     <td><img src="Resource/Img/skl_animation_walking%20in%20place.gif" width=400> </td>
     <td><img src="Resource/Img/video_action_1.gif" width=300> </td>
 </tr>
@@ -168,21 +183,6 @@ The expected output is a comparison between the predicted skeleton (In Green) an
 <tr>
     <td><img src="Resource/Img/skl_animation_looking%20right%20and%20left%20when%20swing%20arms.gif" width=400> </td>
     <td><img src="Resource/Img/video_action_10.gif" width=300> </td>
-
-</tr>
-<tr>
-    <td><img src="Resource/Img/skl_animation_lunge.gif" width=400> </td>
-    <td><img src="Resource/Img/video_action_11.gif" width=300> </td>
-
-</tr>
-<tr>
-    <td><img src="Resource/Img/skl_animation_high%20leg%20raise.gif" width=400> </td>
-    <td><img src="Resource/Img/video_action_12.gif" width=300> </td>
-
-</tr>
-<tr>
-    <td><img src="Resource/Img/skl_animation_squat.gif" width=400> </td>
-    <td><img src="Resource/Img/video_action_13.gif" width=300> </td>
 
 </tr>
 </table></div>

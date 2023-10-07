@@ -37,6 +37,7 @@ if __name__ == '__main__':
         Config.Idx = args.log_dir
     if args.device is not None:
         Config.device = args.device
+        Config_demo.device = args.device
     if args.load_IMU_path is not None:
         Config.model_IMU_path = args.load_IMU_path
     if args.load_Upper_path is not None:

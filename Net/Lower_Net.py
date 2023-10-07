@@ -181,10 +181,7 @@ class LowerNet(nn.Module):
         Return:
             l: location of lower body joints, [batch_size, length_size, 6, 3]
         """
-        if torch.cuda.is_available():
-            device = 'cuda:%d' % 0
-        else:
-            device = 'cpu'
+        device = x.device
         lower_pc_no = Config.lower_pc_no
         upper_joint_no = Config.joint_num_upper
         batch_size = x.size()[0]
