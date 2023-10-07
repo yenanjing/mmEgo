@@ -118,7 +118,8 @@ class PoseByAction(Dataset):
         R_ref = []
         body_length = []
         st = 0
-        for act in range(0, len(subDirlist)):
+        act_no = len(subDirlist)
+        for act in list(range(act_no-3, act_no)) + list(range(0, act_no-3)):
             action_f = 0
             subsubDir = os.path.join(rootDir, subDirlist[act])
             subsubDirlist = sorted(os.listdir(subsubDir))
@@ -285,29 +286,3 @@ class PoseByAction(Dataset):
         return list_all_ti, list_all_key_xyz, list_all_imu, list_all_skl, list_all_ground, list_all_foot_contact, list_all_R_R0R, list_all_t_R0R, list_all_R_RtW
 
 
-if __name__ == '__main__':
-    vis_data = PosePC(train=False, vis=True, batch_length=50)
-    B, L, N, D = vis_data.imu_.shape
-    # accleration = vis_data.imu_[:, :, :, 9:12].reshape(B*L*N, 3)
-    accleration = vis_data.imu_[:, :, :, 12:].reshape(B * L * N, 3)
-    angular_velocity = vis_data.imu_[:, :, :, 9:12].reshape(B * L * N, 3)
-    accleration_x = accleration[:, 0]
-    H_pos = vis_data.data_key_[:, :, 20, :].reshape(B * L, 3)
-    import matplotlib.pyplot as plt
-
-    x1 = range(1, len(accleration) + 1)
-    plt.figure(figsize=(20, 5))
-    colors = ['#1f77b4', '#EE2C2C', '#FF8C00']
-    # plt.title('Eval loss vs. frame', fontsize=20)
-    for i in range(3):
-        plt.plot(x1, accleration[:, i], '.-', color=colors[i], lw=6)
-    # plt.plot(x1, accleration_x, '.-', color='b')
-
-    # x1 = range(1, len(H_pos) + 1)
-    # plt.figure(figsize=(15, 5))
-    # plt.title('Eval loss vs. frame', fontsize=20)
-    # plt.plot(x1, H_pos, '.-', label=['x', 'y', 'z'])
-
-    # plt.legend()
-    plt.axis('off')
-    plt.show()
