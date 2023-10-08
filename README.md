@@ -50,12 +50,12 @@ The structure of the repository is listed as following:
 - Other Python libraries can be installed by `pip install -r requirements.txt`
 
 ****Tips:** If you cannot set up the environment locally, you can use the Google's Colab service to run
-this [notebook](https://colab.research.google.com/drive/1Y8gPFRGWQudmVw7DBKW0JkgehBoV7BoH?usp=sharing).**
+this [notebook](https://colab.research.google.com/drive/14Q-zz6zhzykHgqQx1_EdieYEoql517-l?usp=sharing).**
 
 ## Installation:
 
 ``` shell
-git clone https://github.com/yenanjing/mmEgo_Rev.git
+git clone https://github.com/yenanjing/mmEgo.git
 ```
 
 ## Data:
