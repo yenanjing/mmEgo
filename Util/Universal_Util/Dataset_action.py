@@ -119,7 +119,7 @@ class PoseByAction(Dataset):
         body_length = []
         st = 0
         act_no = len(subDirlist)
-        for act in list(range(act_no-3, act_no)) + list(range(0, act_no-3)):
+        for act in range(0, act_no)
             action_f = 0
             subsubDir = os.path.join(rootDir, subDirlist[act])
             subsubDirlist = sorted(os.listdir(subsubDir))
